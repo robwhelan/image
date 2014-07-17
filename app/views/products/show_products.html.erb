@@ -1,0 +1,140 @@
+<div class="row">
+	<div class="col-xs-1">
+		<div class="form-group">
+			<p>Apparel:</p>
+			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Shirts</button>
+			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Pants</button>
+			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Ties</button>
+			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">T-shirts</button>
+			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Shorts</button>
+			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Bathing Suits</button>
+			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Belts</button>
+			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Socks</button>
+			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Jackets</button>
+	  	</div>
+	</div><!-- /col -->
+	<div class="col-xs-2">
+		<div class="form-group">
+			<p>Color:</p>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-navy">Navy</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-charcoal-gray">Charcoal Gray</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-black">Black</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-gray">Gray</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-taupe">Taupe</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-light-gray">Light Gray</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg">Pure White</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-royal-purple">Royal Purple</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-fuschia">Fuschia</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-magenta">Magenta</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-deep-hot-pink">Deep Hot Pink</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-shocking-pink">Shocking Pink</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-red">Red</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-emerald">Emerald</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-green">Green</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-light-green">Light Green</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-lemon-yellow">Lemon Yellow</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-chinese-blue">Chinese Blue</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-turquoise">Turquoise</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-royal-blue">Royal Blue</button>
+			<hr/>
+			<button type="button" id="buttonGo" class="btn-success btn btn-default btn-lg">GO</button>
+	  	</div><!-- /form group -->
+	</div><!-- /col -->
+	<div class="col-xs-9">
+		<% @products.each do |product| %>
+			<%= link_to product[:link_url], :target => 'blank' do %>
+			<img src=<%= product[:image_url] %> height=208 />
+			<% end %>
+			<% end %>
+	</div><!-- /col -->
+</div><!-- /row -->
+		
+<script type='text/javascript'>
+	var paramApparel;
+	var paramColor;
+	var paramHex;
+
+		$('.apparel-btn').click(function(){ 
+			$('.apparel-btn').removeClass('btn-primary').addClass('btn-default');
+			$(this).removeClass('btn-default').addClass('btn-primary');
+	       	paramApparel = $(this).html();
+	   	});
+
+		$('.color-btn').click(function(){ 
+			$('.color-btn').removeClass('btn-primary').addClass('btn-default');
+			$(this).removeClass('btn-default').addClass('btn-primary');
+	       	paramColor = $(this).html();
+			
+			switch(paramColor) {
+			    case "Navy":
+			        paramHex = "000080";
+			        break;
+			    case "Charcoal Gray":
+			        paramHex = "3c4142";
+			        break;
+			    case "Black":
+			        paramHex = "000000";
+			        break;
+			    case "Gray":
+			        paramHex = "848484";
+			        break;
+			    case "Taupe":
+			        paramHex = "F5F5DC";
+			        break;
+			    case "Light Gray":
+			        paramHex = "d3d3d3";
+			        break;
+			    case "Pure White":
+			        paramHex = "ffffff";
+			        break;
+				case "Royal Purple":
+					paramHex = "4b006e";
+					break;
+				case "Fuchsia":
+					paramHex = "ed0dd9";
+					break;
+				case "Magenta":
+					paramHex = "ff00ff";
+					break;
+				case "Deep Hot Pink":
+					paramHex = "ff69b4";
+					break;
+				case "Shocking Pink":
+					paramHex = "fe02a2";
+					break;
+				case "Red":
+					paramHex = "ff0000";
+					break;
+				case "Emerald":
+					paramHex = "028f1e";
+					break;
+				case "Green":
+					paramHex = "089404";
+					break;
+				case "Light Green":
+					paramHex = "96f97b";
+					break;
+				case "Lemon Yellow":
+					paramHex = "fdff52";
+					break;
+				case "Chinese Blue":
+					paramHex = "448ee4";
+					break;
+				case "Turquoise":
+					paramHex = "0ffef9";
+					break;
+				case "Royal Blue":
+					paramHex = "4169e1";
+			    default:
+			        paramHex = "FFFFFF";
+			}
+	   	});
+		
+		$('#buttonGo').click(function(){
+			var url = '/products/show_products/?apparel=' + paramApparel + 
+												'&color=' + paramColor +
+												'&hex=%23' + paramHex;
+			window.location.href = url;
+		});
+	
+</script>
