@@ -12,15 +12,14 @@ MATCH_MED = 60
 MATCH_HIGH = 80
 
 associate_tag = "betmen-20"
-access_key_id = "AKIAIZB4FOIQ27OYEB2Q"
-secret_key_id = "bYNOSjzYWJvoNRpzWltEPvXhWka8Eft3n/OV0u46"
+access_key_id = ENV['AMAZON_ACCESS']
+secret_key_id = ENV['AMAZON_SECRET']
 
 Amazon::Ecs.options = {
   :associate_tag => associate_tag,
   :AWS_access_key_id => access_key_id,       
   :AWS_secret_key => secret_key_id
 }
-
 
   def hex_distance(hex_1, hex_2)
 
