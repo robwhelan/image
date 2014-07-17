@@ -98,7 +98,7 @@ Amazon::Ecs.options = {
     res = Amazon::Ecs.item_search(search_term, {:response_group => 'Medium', :search_index => 'Apparel'})
     @item_info = []
   
-    num_pages = [res.total_pages, 4].min
+    num_pages = [res.total_pages, 2].min
     
     for i in 0..num_pages
 
