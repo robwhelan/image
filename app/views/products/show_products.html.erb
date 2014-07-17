@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-xs-1">
+	<div class="col-xs-6 col-sm-6 col-lg-2">
 		<div class="form-group">
 			<p>Apparel:</p>
 			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Shirts</button>
@@ -13,7 +13,7 @@
 			<button type="button" class="apparel-btn btn btn-block btn-default btn-lg">Jackets</button>
 	  	</div>
 	</div><!-- /col -->
-	<div class="col-xs-2">
+	<div class="col-xs-6 col-sm-6 col-lg-2">
 		<div class="form-group">
 			<p>Color:</p>
 			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-navy">Navy</button>
@@ -26,7 +26,7 @@
 			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-royal-purple">Royal Purple</button>
 			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-fuschia">Fuschia</button>
 			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-magenta">Magenta</button>
-			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-deep-hot-pink">Deep Hot Pink</button>
+			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-deep-hot-pink">Pink</button>
 			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-shocking-pink">Shocking Pink</button>
 			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-red">Red</button>
 			<button type="button" class="color-btn btn btn-default btn-block btn-lg btn-emerald">Emerald</button>
@@ -40,7 +40,7 @@
 			<button type="button" id="buttonGo" class="btn-success btn btn-default btn-lg">GO</button>
 	  	</div><!-- /form group -->
 	</div><!-- /col -->
-	<div class="col-xs-9">
+	<div class="col-xs-12 col-sm-12 col-lg-8">
 		<% @products.each do |product| %>
 			<%= link_to product[:link_url], :target => 'blank' do %>
 			<img src=<%= product[:image_url] %> height=208 />
@@ -96,7 +96,7 @@
 				case "Magenta":
 					paramHex = "ff00ff";
 					break;
-				case "Deep Hot Pink":
+				case "Pink":
 					paramHex = "ff69b4";
 					break;
 				case "Shocking Pink":

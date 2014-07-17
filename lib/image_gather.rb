@@ -9,7 +9,7 @@ require 'amazon/ecs'
 TOP_N = 8          # Number of swatches
 MATCH_LOW = 75
 MATCH_MED = 60
-MATCH_HIGH = 70
+MATCH_HIGH = 80
 
 associate_tag = "betmen-20"
 access_key_id = "AKIAIZB4FOIQ27OYEB2Q"
@@ -99,7 +99,7 @@ Amazon::Ecs.options = {
     res = Amazon::Ecs.item_search(search_term, {:response_group => 'Medium', :search_index => 'Apparel'})
     @item_info = []
   
-    num_pages = [res.total_pages, 5].min
+    num_pages = [res.total_pages, 4].min
     
     for i in 0..num_pages
 
