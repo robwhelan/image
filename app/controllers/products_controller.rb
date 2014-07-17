@@ -1,9 +1,9 @@
 class ProductsController < ApplicationController
   include ImageGather
   def show_products
-    apparel = "shirts"
-    color = "navy blue"
-    hex = "#000080"
+    @apparel = "shirts"
+    @color = "navy blue"
+    @hex = "#000080"
     
     if params[:apparel] && params[:color] && params[:hex]
       @apparel = params[:apparel]
