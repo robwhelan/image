@@ -1,8 +1,9 @@
 module ImageGather
 
-  if Rails.env == "Production"
+#  if Rails.env == "Production"
     require 'RMagick'
-  end
+#  end
+  
 require 'amazon/ecs'
 
 TOP_N = 8          # Number of swatches
