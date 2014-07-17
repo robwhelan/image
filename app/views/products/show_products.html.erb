@@ -42,7 +42,8 @@
 	</div><!-- /col -->
 	<div class="col-xs-12 col-sm-12 col-lg-8">
 		<% @products.each do |product| %>
-			<%= link_to product[:link_url], :target => 'blank' do %>
+			<%= link_to product[:link_url], :target => 'blank', :class => 'productClass',
+				 :data => {:apparel => @apparel, :color => @color } do %>
 			<img src=<%= product[:image_url] %> height=208 />
 			<% end %>
 			<% end %>
@@ -50,6 +51,14 @@
 </div><!-- /row -->
 		
 <script type='text/javascript'>
+
+	$('.productClass').click(function(){
+		var _apparel = $(this).attr('data-apparel');
+		var _color = $(this).attr('data-color');
+		var _link = $(this).attr('href');
+		ga('send', 'event', _apparel, _color, _link);
+	});
+
 	var paramApparel;
 	var paramColor;
 	var paramHex;
