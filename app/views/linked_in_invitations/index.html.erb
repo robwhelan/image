@@ -1,0 +1,31 @@
+<h1>Listing linked_in_invitations</h1>
+
+<table>
+  <tr>
+	  <th>ID</th>
+    <th>Name</th>
+    <th>Date sent</th>
+	<th>Initiator</th>
+    <th>Accepted</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @linked_in_invitations.each do |linked_in_invitation| %>
+  <tr>
+	  <td><%= linked_in_invitation.id %></td>
+    <td><%= linked_in_invitation.name %></td>
+    <td><%= linked_in_invitation.date_sent %></td>
+    <td><%= linked_in_invitation.initiator %></td>	
+    <td><%= linked_in_invitation.accepted %></td>
+    <td><%= link_to 'Show', linked_in_invitation %></td>
+    <td><%= link_to 'Edit', edit_linked_in_invitation_path(linked_in_invitation) %></td>
+    <td><%= link_to 'Destroy', linked_in_invitation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Linked in invitation', new_linked_in_invitation_path %>

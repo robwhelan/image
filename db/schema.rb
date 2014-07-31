@@ -11,6 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20140731012104) do
+
+  create_table "linked_in_invitations", :force => true do |t|
+    t.string   "name"
+    t.date     "date_sent"
+    t.boolean  "accepted"
+    t.string   "initiator"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "linked_in_messages", :force => true do |t|
+    t.string   "name"
+    t.date     "date_sent"
+    t.string   "initiator"
+    t.boolean  "is_a_reply_to_outbound"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
 
 end

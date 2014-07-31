@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @linked_in_message.name %>
+</p>
+
+<p>
+  <b>Date sent:</b>
+  <%= @linked_in_message.date_sent %>
+</p>
+
+<p>
+  <b>Initiator:</b>
+  <%= @linked_in_message.initiator %>
+</p>
+
+<p>
+  <b>Is a reply to outbound:</b>
+  <%= @linked_in_message.is_a_reply_to_outbound %>
+</p>
+
+
+<%= link_to 'Edit', edit_linked_in_message_path(@linked_in_message) %> |
+<%= link_to 'Back', linked_in_messages_path %>

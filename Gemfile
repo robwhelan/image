@@ -5,6 +5,9 @@ gem 'rmagick', '2.13.2'
 gem "rest-client", "~> 1.6.7"
 gem 'amazon-ecs'
 gem 'thin'
+gem 'nokogiri'
+gem 'mechanize'
+gem 'linkedin'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

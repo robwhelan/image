@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  date_sent: 2014-07-30
+  accepted: false
+  initiator: MyString
+
+two:
+  name: MyString
+  date_sent: 2014-07-30
+  accepted: false
+  initiator: MyString

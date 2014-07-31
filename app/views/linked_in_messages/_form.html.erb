@@ -1,0 +1,33 @@
+<%= form_for(@linked_in_message) do |f| %>
+  <% if @linked_in_message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@linked_in_message.errors.count, "error") %> prohibited this linked_in_message from being saved:</h2>
+
+      <ul>
+      <% @linked_in_message.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :date_sent %><br />
+    <%= f.date_select :date_sent %>
+  </div>
+  <div class="field">
+    <%= f.label :initiator %><br />
+    <%= f.text_field :initiator %>
+  </div>
+  <div class="field">
+    <%= f.label :is_a_reply_to_outbound %><br />
+    <%= f.check_box :is_a_reply_to_outbound %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

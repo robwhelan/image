@@ -1,0 +1,29 @@
+<h1>Listing linked_in_messages</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Date sent</th>
+    <th>Initiator</th>
+    <th>Is a reply to outbound</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @linked_in_messages.each do |linked_in_message| %>
+  <tr>
+    <td><%= linked_in_message.name %></td>
+    <td><%= linked_in_message.date_sent %></td>
+    <td><%= linked_in_message.initiator %></td>
+    <td><%= linked_in_message.is_a_reply_to_outbound %></td>
+    <td><%= link_to 'Show', linked_in_message %></td>
+    <td><%= link_to 'Edit', edit_linked_in_message_path(linked_in_message) %></td>
+    <td><%= link_to 'Destroy', linked_in_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Linked in message', new_linked_in_message_path %>

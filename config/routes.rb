@@ -1,4 +1,10 @@
 ImageLook::Application.routes.draw do
+  resources :linked_in_messages
+
+
+  resources :linked_in_invitations
+
+
   get "products/show_products"
 
   # The priority is based upon order of creation:
