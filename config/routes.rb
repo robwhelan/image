@@ -1,8 +1,17 @@
 ImageLook::Application.routes.draw do
+  resources :text_verizons
+
+
   resources :linked_in_messages
 
 
   resources :linked_in_invitations
+
+
+  resources :call_verizons
+
+
+  resources :email_gmails
 
 
   get "products/show_products"

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date sent:</b>
+  <%= @email_gmail.date_sent %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%= @email_gmail.subject %>
+</p>
+
+<p>
+  <b>Contact email:</b>
+  <%= @email_gmail.contact_email %>
+</p>
+
+<p>
+  <b>Direction:</b>
+  <%= @email_gmail.direction %>
+</p>
+
+<p>
+  <b>Contact name:</b>
+  <%= @email_gmail.contact_name %>
+</p>
+
+<p>
+  <b>Message:</b>
+  <%= @email_gmail.message_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_email_gmail_path(@email_gmail) %> |
+<%= link_to 'Back', email_gmails_path %>

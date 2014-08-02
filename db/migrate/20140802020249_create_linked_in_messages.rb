@@ -5,7 +5,8 @@ class CreateLinkedInMessages < ActiveRecord::Migration
       t.date :date_sent
       t.string :initiator
       t.boolean :is_a_reply_to_outbound
-      t.message_id :string
+      t.string :message_id
+
       t.timestamps
     end
   end

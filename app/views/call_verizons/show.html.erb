@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Call date:</b>
+  <%= @call_verizon.call_date %>
+</p>
+
+<p>
+  <b>Call time:</b>
+  <%= @call_verizon.call_time %>
+</p>
+
+<p>
+  <b>Call direction:</b>
+  <%= @call_verizon.call_direction %>
+</p>
+
+<p>
+  <b>Contact number:</b>
+  <%= @call_verizon.contact_number %>
+</p>
+
+<p>
+  <b>Call duration:</b>
+  <%= @call_verizon.call_duration %>
+</p>
+
+
+<%= link_to 'Edit', edit_call_verizon_path(@call_verizon) %> |
+<%= link_to 'Back', call_verizons_path %>

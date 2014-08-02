@@ -8,6 +8,9 @@ gem 'thin'
 gem 'nokogiri'
 gem 'mechanize'
 gem 'linkedin'
+gem 'ruby-gmail'
+gem 'shared-mime-info'
+gem 'mail'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

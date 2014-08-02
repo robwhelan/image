@@ -1,15 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
   date_sent: 2014-08-01
-  initiator: MyString
-  is_a_reply_to_outbound: false
+  subject: MyString
+  contact_email: MyString
+  direction: MyString
+  contact_name: MyString
   message_id: MyString
 
 two:
-  name: MyString
   date_sent: 2014-08-01
-  initiator: MyString
-  is_a_reply_to_outbound: false
+  subject: MyString
+  contact_email: MyString
+  direction: MyString
+  contact_name: MyString
   message_id: MyString

@@ -11,15 +11,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140731012104) do
+ActiveRecord::Schema.define(:version => 20140802022020) do
+
+  create_table "call_verizons", :force => true do |t|
+    t.string   "call_date"
+    t.string   "call_time"
+    t.string   "call_direction"
+    t.string   "contact_number"
+    t.string   "call_duration"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "email_gmails", :force => true do |t|
+    t.date     "date_sent"
+    t.string   "subject"
+    t.string   "contact_email"
+    t.string   "direction"
+    t.string   "contact_name"
+    t.string   "message_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "linked_in_invitations", :force => true do |t|
     t.string   "name"
     t.date     "date_sent"
     t.boolean  "accepted"
     t.string   "initiator"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "invitation_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "linked_in_messages", :force => true do |t|
@@ -27,8 +49,18 @@ ActiveRecord::Schema.define(:version => 20140731012104) do
     t.date     "date_sent"
     t.string   "initiator"
     t.boolean  "is_a_reply_to_outbound"
+    t.string   "message_id"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+  end
+
+  create_table "text_verizons", :force => true do |t|
+    t.string   "text_date"
+    t.string   "text_time"
+    t.string   "text_contact_number"
+    t.string   "text_direction"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
 end

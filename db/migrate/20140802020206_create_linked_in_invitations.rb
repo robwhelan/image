@@ -5,6 +5,7 @@ class CreateLinkedInInvitations < ActiveRecord::Migration
       t.date :date_sent
       t.boolean :accepted
       t.string :initiator
+      t.string :invitation_id
 
       t.timestamps
     end

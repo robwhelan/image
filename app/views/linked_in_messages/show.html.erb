@@ -20,6 +20,11 @@
   <%= @linked_in_message.is_a_reply_to_outbound %>
 </p>
 
+<p>
+  <b>Message:</b>
+  <%= @linked_in_message.message_id %>
+</p>
+
 
 <%= link_to 'Edit', edit_linked_in_message_path(@linked_in_message) %> |
 <%= link_to 'Back', linked_in_messages_path %>

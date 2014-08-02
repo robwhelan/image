@@ -18,7 +18,7 @@ class LinkedInInvitationsControllerTest < ActionController::TestCase
 
   test "should create linked_in_invitation" do
     assert_difference('LinkedInInvitation.count') do
-      post :create, linked_in_invitation: { accepted: @linked_in_invitation.accepted, date_sent: @linked_in_invitation.date_sent, initiator: @linked_in_invitation.initiator, name: @linked_in_invitation.name }
+      post :create, linked_in_invitation: { accepted: @linked_in_invitation.accepted, date_sent: @linked_in_invitation.date_sent, initiator: @linked_in_invitation.initiator, invitation_id: @linked_in_invitation.invitation_id, name: @linked_in_invitation.name }
     end
 
     assert_redirected_to linked_in_invitation_path(assigns(:linked_in_invitation))
@@ -35,7 +35,7 @@ class LinkedInInvitationsControllerTest < ActionController::TestCase
   end
 
   test "should update linked_in_invitation" do
-    put :update, id: @linked_in_invitation, linked_in_invitation: { accepted: @linked_in_invitation.accepted, date_sent: @linked_in_invitation.date_sent, initiator: @linked_in_invitation.initiator, name: @linked_in_invitation.name }
+    put :update, id: @linked_in_invitation, linked_in_invitation: { accepted: @linked_in_invitation.accepted, date_sent: @linked_in_invitation.date_sent, initiator: @linked_in_invitation.initiator, invitation_id: @linked_in_invitation.invitation_id, name: @linked_in_invitation.name }
     assert_redirected_to linked_in_invitation_path(assigns(:linked_in_invitation))
   end
 

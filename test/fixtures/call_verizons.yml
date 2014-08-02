@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  call_date: MyString
+  call_time: MyString
+  call_direction: MyString
+  contact_number: MyString
+  call_duration: MyString
+
+two:
+  call_date: MyString
+  call_time: MyString
+  call_direction: MyString
+  contact_number: MyString
+  call_duration: MyString

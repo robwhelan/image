@@ -2,11 +2,11 @@
 
 <table>
   <tr>
-	  <th>ID</th>
     <th>Name</th>
     <th>Date sent</th>
-	<th>Initiator</th>
     <th>Accepted</th>
+    <th>Initiator</th>
+    <th>Invitation</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,11 +14,11 @@
 
 <% @linked_in_invitations.each do |linked_in_invitation| %>
   <tr>
-	  <td><%= linked_in_invitation.id %></td>
     <td><%= linked_in_invitation.name %></td>
     <td><%= linked_in_invitation.date_sent %></td>
-    <td><%= linked_in_invitation.initiator %></td>	
     <td><%= linked_in_invitation.accepted %></td>
+    <td><%= linked_in_invitation.initiator %></td>
+    <td><%= linked_in_invitation.invitation_id %></td>
     <td><%= link_to 'Show', linked_in_invitation %></td>
     <td><%= link_to 'Edit', edit_linked_in_invitation_path(linked_in_invitation) %></td>
     <td><%= link_to 'Destroy', linked_in_invitation, method: :delete, data: { confirm: 'Are you sure?' } %></td>

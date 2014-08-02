@@ -6,6 +6,7 @@
     <th>Date sent</th>
     <th>Initiator</th>
     <th>Is a reply to outbound</th>
+    <th>Message</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,6 +18,7 @@
     <td><%= linked_in_message.date_sent %></td>
     <td><%= linked_in_message.initiator %></td>
     <td><%= linked_in_message.is_a_reply_to_outbound %></td>
+    <td><%= linked_in_message.message_id %></td>
     <td><%= link_to 'Show', linked_in_message %></td>
     <td><%= link_to 'Edit', edit_linked_in_message_path(linked_in_message) %></td>
     <td><%= link_to 'Destroy', linked_in_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>

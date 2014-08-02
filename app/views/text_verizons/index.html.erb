@@ -1,0 +1,29 @@
+<h1>Listing text_verizons</h1>
+
+<table>
+  <tr>
+    <th>Text date</th>
+    <th>Text time</th>
+    <th>Text contact number</th>
+    <th>Text direction</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @text_verizons.each do |text_verizon| %>
+  <tr>
+    <td><%= text_verizon.text_date %></td>
+    <td><%= text_verizon.text_time %></td>
+    <td><%= text_verizon.text_contact_number %></td>
+    <td><%= text_verizon.text_direction %></td>
+    <td><%= link_to 'Show', text_verizon %></td>
+    <td><%= link_to 'Edit', edit_text_verizon_path(text_verizon) %></td>
+    <td><%= link_to 'Destroy', text_verizon, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Text verizon', new_text_verizon_path %>

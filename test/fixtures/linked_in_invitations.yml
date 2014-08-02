@@ -2,12 +2,14 @@
 
 one:
   name: MyString
-  date_sent: 2014-07-30
+  date_sent: 2014-08-01
   accepted: false
   initiator: MyString
+  invitation_id: MyString
 
 two:
   name: MyString
-  date_sent: 2014-07-30
+  date_sent: 2014-08-01
   accepted: false
   initiator: MyString
+  invitation_id: MyString

@@ -33,7 +33,7 @@ def get_invitations(initiator)
 
     form = agent.page.form_with :name => 'login'
     form.session_key    = 'whelan@gmail.com'
-    form.session_password = 'Susannah2'
+    form.session_password = ''
     form.submit
 
     if initiator == "outbound"
@@ -65,6 +65,7 @@ def get_invitations(initiator)
                 invite.accepted = false
               end
             end
+          invite.invitation_id = invitation.children[1].attributes["value"].value
           invite.save
         else
           puts "not an invitation"
@@ -85,7 +86,7 @@ def get_messages(initiator)
 
     form = agent.page.form_with :name => 'login'
     form.session_key    = 'whelan@gmail.com'
-    form.session_password = 'Susannah2'
+    form.session_password = ''
     form.submit
 
     if initiator == "outbound"
@@ -110,7 +111,7 @@ def get_messages(initiator)
           msg.name = message.at('.participants').children.last.text
           msg.date_sent = message.at('.date').at('.time-millis').text
           msg.initiator = initiator
-
+          
           if message.at('.item-status').nil?
             msg.is_a_reply_to_outbound = false
           else
@@ -120,7 +121,7 @@ def get_messages(initiator)
               msg.is_a_reply_to_outbound = false
             end
           end
-
+          msg.message_id = message.children[1].attributes["value"].value
           msg.save
         end
       end

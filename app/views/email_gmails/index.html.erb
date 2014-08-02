@@ -1,0 +1,31 @@
+<h1>Listing email_gmails</h1>
+
+<table>
+  <tr>
+    <th>Date sent</th>
+    <th>Contact email</th>
+    <th>Direction</th>
+    <th>Contact name</th>
+    <th>Message</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @email_gmails.each do |email_gmail| %>
+  <tr>
+    <td><%= email_gmail.date_sent %></td>
+    <td><%= email_gmail.contact_email %></td>
+    <td><%= email_gmail.direction %></td>
+    <td><%= email_gmail.contact_name %></td>
+    <td><%= email_gmail.message_id %></td>
+    <td><%= link_to 'Show', email_gmail %></td>
+    <td><%= link_to 'Edit', edit_email_gmail_path(email_gmail) %></td>
+    <td><%= link_to 'Destroy', email_gmail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Email gmail', new_email_gmail_path %>

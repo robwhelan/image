@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  text_date: MyString
+  text_time: MyString
+  text_contact_number: MyString
+  text_direction: MyString
+
+two:
+  text_date: MyString
+  text_time: MyString
+  text_contact_number: MyString
+  text_direction: MyString

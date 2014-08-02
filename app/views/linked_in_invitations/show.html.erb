@@ -20,6 +20,11 @@
   <%= @linked_in_invitation.initiator %>
 </p>
 
+<p>
+  <b>Invitation:</b>
+  <%= @linked_in_invitation.invitation_id %>
+</p>
+
 
 <%= link_to 'Edit', edit_linked_in_invitation_path(@linked_in_invitation) %> |
 <%= link_to 'Back', linked_in_invitations_path %>

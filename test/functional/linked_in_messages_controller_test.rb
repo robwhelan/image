@@ -18,7 +18,7 @@ class LinkedInMessagesControllerTest < ActionController::TestCase
 
   test "should create linked_in_message" do
     assert_difference('LinkedInMessage.count') do
-      post :create, linked_in_message: { date_sent: @linked_in_message.date_sent, initiator: @linked_in_message.initiator, is_a_reply_to_outbound: @linked_in_message.is_a_reply_to_outbound, name: @linked_in_message.name }
+      post :create, linked_in_message: { date_sent: @linked_in_message.date_sent, initiator: @linked_in_message.initiator, is_a_reply_to_outbound: @linked_in_message.is_a_reply_to_outbound, message_id: @linked_in_message.message_id, name: @linked_in_message.name }
     end
 
     assert_redirected_to linked_in_message_path(assigns(:linked_in_message))
@@ -35,7 +35,7 @@ class LinkedInMessagesControllerTest < ActionController::TestCase
   end
 
   test "should update linked_in_message" do
-    put :update, id: @linked_in_message, linked_in_message: { date_sent: @linked_in_message.date_sent, initiator: @linked_in_message.initiator, is_a_reply_to_outbound: @linked_in_message.is_a_reply_to_outbound, name: @linked_in_message.name }
+    put :update, id: @linked_in_message, linked_in_message: { date_sent: @linked_in_message.date_sent, initiator: @linked_in_message.initiator, is_a_reply_to_outbound: @linked_in_message.is_a_reply_to_outbound, message_id: @linked_in_message.message_id, name: @linked_in_message.name }
     assert_redirected_to linked_in_message_path(assigns(:linked_in_message))
   end
 
