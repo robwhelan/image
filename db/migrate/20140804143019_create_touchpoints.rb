@@ -8,7 +8,6 @@ class CreateTouchpoints < ActiveRecord::Migration
       t.string :name, null: false
       t.string :direction, null: false
       t.date :touchpoint_date
-      t.time :touchpoint_time
 
       t.timestamps
     end

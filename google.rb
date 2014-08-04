@@ -1,8 +1,8 @@
-def get_gmail_messages(msg_direction)
+def get_gmail_messages(msg_direction, user)
   require 'gmail'
 
   username = "whelan@gmail.com"
-  password = ""
+  password = "Epula10roast"
   gmail = Gmail.new(username, password)
 
   if (msg_direction == "outbound")
@@ -13,45 +13,60 @@ def get_gmail_messages(msg_direction)
 
   messages = mbox.emails
 
+  first_data_pull = user.email_gmails.where(:direction => msg_direction).empty?
+  if first_data_pull
+    newest = Date.parse("January 1, 1900")
+  else
+    newest = EmailGmail.newest(msg_direction, user)
+  end
+
   if msg_direction == "outbound"
     messages.last(20).each do |msg|
-      e = EmailGmail.new
-      e.date_sent = msg.date
-      e.subject = msg.subject
-      e.contact_email = msg.smtp_envelope_to[0] #gets recipient email
-      e.contact_name = msg.header_fields[3].field.display_names[0] #gets recipient display name
-      e.direction = msg_direction
-      e.message_id = msg.message.message_id
-      e.save
-    end #block
+      if newest < msg.date
+        e = user.email_gmails.new
+        e.date_sent = msg.date
+        e.subject = msg.subject
+        e.contact_email = msg.smtp_envelope_to[0] #gets recipient email
+        e.contact_name = msg.header_fields[3].field.display_names[0] #gets recipient display name
+        e.direction = msg_direction
+        e.message_id = msg.message.message_id
+        e.save
+      else
+        puts "already been downloaded"
+      end #if new
+    end #each message
   elsif msg_direction == "inbound"
     messages.last(20).each do |msg|
-      e = EmailGmail.new
-      e.date_sent = msg.date
-      e.subject = msg.subject
-      e.contact_email = msg.smtp_envelope_from #gets recipient email
+      if newest < msg.date
+        e = user.email_gmails.new
+        e.date_sent = msg.date
+        e.subject = msg.subject
+        e.contact_email = msg.smtp_envelope_from #gets recipient email
 
-      begin
-        e.contact_name = msg.header_fields[3].field.display_names[0]
-      rescue NoMethodError
         begin
-          e.contact_name = msg.header_fields[6].field.display_names[0]
+          e.contact_name = msg.header_fields[3].field.display_names[0]
         rescue NoMethodError
           begin
-            e.contact_name = msg.header_fields[7].field.display_names[0]
+            e.contact_name = msg.header_fields[6].field.display_names[0]
           rescue NoMethodError
             begin
-              e.contact_name = msg.header_fields[1].field.display_names[0]
+              e.contact_name = msg.header_fields[7].field.display_names[0]
             rescue NoMethodError
-              e.contact_name = ""
+              begin
+                e.contact_name = msg.header_fields[1].field.display_names[0]
+              rescue NoMethodError
+                e.contact_name = ""
+              end
             end
           end
         end
-      end
 
-      e.direction = msg_direction
-      e.message_id = msg.message.message_id
-      e.save
+        e.direction = msg_direction
+        e.message_id = msg.message.message_id
+        e.save
+      else
+        puts "already downloaded"
+      end
     end #block
   end #outbound / inbound
 

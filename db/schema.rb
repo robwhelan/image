@@ -14,15 +14,19 @@
 ActiveRecord::Schema.define(:version => 20140804144024) do
 
   create_table "call_verizons", :force => true do |t|
-    t.string   "call_date"
-    t.string   "call_time"
+    t.datetime "call_date"
     t.string   "call_direction"
     t.string   "contact_number"
     t.string   "call_duration"
     t.boolean  "unassigned_contact"
+    t.integer  "contact_id"
+    t.integer  "user_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
+
+  add_index "call_verizons", ["contact_id"], :name => "index_call_verizons_on_contact_id"
+  add_index "call_verizons", ["user_id"], :name => "index_call_verizons_on_user_id"
 
   create_table "contacts", :force => true do |t|
     t.string   "first_name"
@@ -34,53 +38,75 @@ ActiveRecord::Schema.define(:version => 20140804144024) do
     t.string   "handle_phone"
     t.string   "handle_email"
     t.string   "handle_linked_in"
+    t.integer  "user_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
 
+  add_index "contacts", ["user_id"], :name => "index_contacts_on_user_id"
+
   create_table "email_gmails", :force => true do |t|
-    t.date     "date_sent"
+    t.datetime "date_sent"
     t.string   "subject"
     t.string   "contact_email"
     t.string   "direction"
     t.string   "contact_name"
     t.string   "message_id"
     t.boolean  "unassigned_contact"
+    t.integer  "contact_id"
+    t.integer  "user_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
 
+  add_index "email_gmails", ["contact_id"], :name => "index_email_gmails_on_contact_id"
+  add_index "email_gmails", ["user_id"], :name => "index_email_gmails_on_user_id"
+
   create_table "linked_in_invitations", :force => true do |t|
     t.string   "name"
-    t.date     "date_sent"
+    t.datetime "date_sent"
     t.boolean  "accepted"
     t.string   "initiator"
     t.string   "invitation_id"
     t.boolean  "unassigned_contact"
+    t.integer  "contact_id"
+    t.integer  "user_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
 
+  add_index "linked_in_invitations", ["contact_id"], :name => "index_linked_in_invitations_on_contact_id"
+  add_index "linked_in_invitations", ["user_id"], :name => "index_linked_in_invitations_on_user_id"
+
   create_table "linked_in_messages", :force => true do |t|
     t.string   "name"
-    t.date     "date_sent"
+    t.datetime "date_sent"
     t.string   "initiator"
     t.boolean  "is_a_reply_to_outbound"
     t.string   "message_id"
     t.boolean  "unassigned_contact"
+    t.integer  "contact_id"
+    t.integer  "user_id"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
   end
 
+  add_index "linked_in_messages", ["contact_id"], :name => "index_linked_in_messages_on_contact_id"
+  add_index "linked_in_messages", ["user_id"], :name => "index_linked_in_messages_on_user_id"
+
   create_table "text_verizons", :force => true do |t|
-    t.string   "text_date"
-    t.string   "text_time"
+    t.datetime "text_date"
     t.string   "text_contact_number"
     t.string   "text_direction"
     t.boolean  "unassigned_contact"
+    t.integer  "contact_id"
+    t.integer  "user_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
+
+  add_index "text_verizons", ["contact_id"], :name => "index_text_verizons_on_contact_id"
+  add_index "text_verizons", ["user_id"], :name => "index_text_verizons_on_user_id"
 
   create_table "touchpoints", :force => true do |t|
     t.integer  "subject_id",      :null => false

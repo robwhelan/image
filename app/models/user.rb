@@ -7,4 +7,11 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :handle_phone, :handle_linked_in
   # attr_accessible :title, :body
+  
+  has_many :touchpoints
+  has_many :call_verizons
+  has_many :email_gmails
+  has_many :linked_in_invitations
+  has_many :linked_in_messages
+  has_many :text_verizons
 end

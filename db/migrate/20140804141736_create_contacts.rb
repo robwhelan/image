@@ -10,8 +10,9 @@ class CreateContacts < ActiveRecord::Migration
       t.string :handle_phone
       t.string :handle_email
       t.string :handle_linked_in
-
+      t.integer :user_id
       t.timestamps
     end
+    add_index :contacts, :user_id
   end
 end

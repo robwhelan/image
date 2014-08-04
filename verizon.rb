@@ -1,4 +1,4 @@
-def get_calls
+def get_calls(user)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
     agent.get "http://www.verizonwireless.com/"
@@ -17,7 +17,7 @@ def get_calls
 
     #password
     if agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
-      agent.page.form.IDToken2 = ""
+      agent.page.form.IDToken2 = "Whidbey3Downing"
       agent.page.form.submit
     end
     puts 'submitted password'
@@ -35,23 +35,39 @@ def get_calls
     #now get all the data
     table = agent.page.search('td')
 
-    (0..table.count).step(6) do |i|
-      c = CallVerizon.new
-      c.call_date = table[i].children[0].text
-      c.call_time = table[i+1].children[0].text
-      if table[i+2].children[0].text == "INCOMING"
-        c.call_direction = "inbound"
-      else
-        c.call_direction = "outbound"
-      end
-      c.contact_number = table[i+3].children[1].attributes["title"].value
-      c.call_duration = table[i+5].children[0].text
-      c.save
+    first_data_pull = user.call_verizons.empty?
+    if first_data_pull
+      newest = Date.parse("January 1, 1900")
+    else
+      newest = CallVerizon.newest(user)
     end
+
+    (0..table.count).step(6) do |i|
+
+      dt = table[i].children[0].text
+      dt=Date.strptime(dt,"%m/%d/%Y")
+      tm = table[i+1].children[0].text
+      date_string = DateTime.parse( "#{dt} #{tm}").to_s
+      call_date = DateTime.parse(date_string)
+
+      if newest < call_date
+        c = user.call_verizons.new
+
+        if table[i+2].children[0].text == "INCOMING"
+          c.call_direction = "inbound"
+        else
+          c.call_direction = "outbound"
+        end
+        c.contact_number = table[i+3].children[1].attributes["title"].value
+        c.call_duration = table[i+5].children[0].text
+        c.call_date = call_date
+        c.save
+      end #if newer data
+    end #stepping through data
     
 end #getcalls
 
-def get_texts
+def get_texts(user)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
     agent.get "http://www.verizonwireless.com/"
@@ -70,7 +86,7 @@ def get_texts
 
     #password
     if agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
-      agent.page.form.IDToken2 = ""
+      agent.page.form.IDToken2 = "Whidbey3Downing"
       agent.page.form.submit
     end
     puts 'submitted password'
@@ -88,17 +104,32 @@ def get_texts
     #now get all the data
     table = agent.page.search('td')
 
-    (0..table.count).step(6) do |i|
-      t = TextVerizon.new
-      t.text_date = table[i].children[0].text
-      t.text_time = table[i+1].children[0].text
-      if table[i+4].children[0].text == "Received"
-        t.text_contact_number = table[i+3].children[1].attributes["title"].value
-      elsif table[i+4].children[0].text == "Sent"
-        t.text_contact_number = table[i+2].children[1].attributes["title"].value
-      end
-      t.text_direction = table[i+4].children[0].text
-      t.save
+    first_data_pull = user.text_verizons.empty?
+    if first_data_pull
+      newest = Date.parse("January 1, 1900")
+    else
+      newest = TextVerizon.newest(user)
     end
+
+    (0..table.count).step(6) do |i|
+
+      dt = table[i].children[0].text
+      dt=Date.strptime(dt,"%m/%d/%Y")
+      tm = table[i+1].children[0].text
+      date_string = DateTime.parse( "#{dt} #{tm}").to_s
+      text_date = DateTime.parse(date_string)
+
+      if newest < text_date
+        t = user.text_verizons.new
+        if table[i+4].children[0].text == "Received"
+          t.text_contact_number = table[i+3].children[1].attributes["title"].value
+        elsif table[i+4].children[0].text == "Sent"
+          t.text_contact_number = table[i+2].children[1].attributes["title"].value
+        end
+        t.text_direction = table[i+4].children[0].text
+        t.text_date = text_date
+        t.save
+      end # newest < text date
+    end # td block
     
 end #get texts
