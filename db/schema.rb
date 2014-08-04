@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140802022020) do
+ActiveRecord::Schema.define(:version => 20140804144024) do
 
   create_table "call_verizons", :force => true do |t|
     t.string   "call_date"
@@ -19,8 +19,23 @@ ActiveRecord::Schema.define(:version => 20140802022020) do
     t.string   "call_direction"
     t.string   "contact_number"
     t.string   "call_duration"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.boolean  "unassigned_contact"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "contacts", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "zip_code"
+    t.string   "handle_phone"
+    t.string   "handle_email"
+    t.string   "handle_linked_in"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "email_gmails", :force => true do |t|
@@ -30,8 +45,9 @@ ActiveRecord::Schema.define(:version => 20140802022020) do
     t.string   "direction"
     t.string   "contact_name"
     t.string   "message_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.boolean  "unassigned_contact"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "linked_in_invitations", :force => true do |t|
@@ -40,8 +56,9 @@ ActiveRecord::Schema.define(:version => 20140802022020) do
     t.boolean  "accepted"
     t.string   "initiator"
     t.string   "invitation_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.boolean  "unassigned_contact"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "linked_in_messages", :force => true do |t|
@@ -50,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20140802022020) do
     t.string   "initiator"
     t.boolean  "is_a_reply_to_outbound"
     t.string   "message_id"
+    t.boolean  "unassigned_contact"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
   end
@@ -59,8 +77,47 @@ ActiveRecord::Schema.define(:version => 20140802022020) do
     t.string   "text_time"
     t.string   "text_contact_number"
     t.string   "text_direction"
+    t.boolean  "unassigned_contact"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
+
+  create_table "touchpoints", :force => true do |t|
+    t.integer  "subject_id",      :null => false
+    t.string   "subject_type",    :null => false
+    t.integer  "user_id"
+    t.integer  "contact_id"
+    t.string   "name",            :null => false
+    t.string   "direction",       :null => false
+    t.date     "touchpoint_date"
+    t.time     "touchpoint_time"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "touchpoints", ["contact_id"], :name => "index_touchpoints_on_contact_id"
+  add_index "touchpoints", ["subject_id"], :name => "index_touchpoints_on_subject_id"
+  add_index "touchpoints", ["subject_type"], :name => "index_touchpoints_on_subject_type"
+  add_index "touchpoints", ["user_id"], :name => "index_touchpoints_on_user_id"
+
+  create_table "users", :force => true do |t|
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "handle_phone"
+    t.string   "handle_linked_in"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0,  :null => false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

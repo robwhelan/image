@@ -5,6 +5,7 @@ class CreateTextVerizons < ActiveRecord::Migration
       t.string :text_time
       t.string :text_contact_number
       t.string :text_direction
+      t.boolean :unassigned_contact
 
       t.timestamps
     end

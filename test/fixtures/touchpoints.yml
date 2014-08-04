@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  subject: 
+  user: 
+  name: MyString
+  direction: MyString
+  contact: 
+  touchpoint_date: 2014-08-04
+  touchpoint_time: 2014-08-04 10:30:19
+
+two:
+  subject: 
+  user: 
+  name: MyString
+  direction: MyString
+  contact: 
+  touchpoint_date: 2014-08-04
+  touchpoint_time: 2014-08-04 10:30:19

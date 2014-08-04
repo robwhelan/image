@@ -7,6 +7,7 @@ class CreateEmailGmails < ActiveRecord::Migration
       t.string :direction
       t.string :contact_name
       t.string :message_id
+      t.boolean :unassigned_contact
 
       t.timestamps
     end

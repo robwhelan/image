@@ -1,4 +1,12 @@
 ImageLook::Application.routes.draw do
+  resources :touchpoints
+
+
+  devise_for :users
+
+  resources :contacts
+
+
   resources :text_verizons
 
 
@@ -16,6 +24,8 @@ ImageLook::Application.routes.draw do
 
   get "products/show_products"
 
+  root to: "contacts#index"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

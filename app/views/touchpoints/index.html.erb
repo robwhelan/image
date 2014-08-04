@@ -1,0 +1,35 @@
+<h1>Listing touchpoints</h1>
+
+<table>
+  <tr>
+    <th>Subject</th>
+    <th>User</th>
+    <th>Name</th>
+    <th>Direction</th>
+    <th>Contact</th>
+    <th>Touchpoint date</th>
+    <th>Touchpoint time</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @touchpoints.each do |touchpoint| %>
+  <tr>
+    <td><%= touchpoint.subject %></td>
+    <td><%= touchpoint.user %></td>
+    <td><%= touchpoint.name %></td>
+    <td><%= touchpoint.direction %></td>
+    <td><%= touchpoint.contact %></td>
+    <td><%= touchpoint.touchpoint_date %></td>
+    <td><%= touchpoint.touchpoint_time %></td>
+    <td><%= link_to 'Show', touchpoint %></td>
+    <td><%= link_to 'Edit', edit_touchpoint_path(touchpoint) %></td>
+    <td><%= link_to 'Destroy', touchpoint, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Touchpoint', new_touchpoint_path %>

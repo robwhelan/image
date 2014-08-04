@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Subject:</b>
+  <%= @touchpoint.subject %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @touchpoint.user %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @touchpoint.name %>
+</p>
+
+<p>
+  <b>Direction:</b>
+  <%= @touchpoint.direction %>
+</p>
+
+<p>
+  <b>Contact:</b>
+  <%= @touchpoint.contact %>
+</p>
+
+<p>
+  <b>Touchpoint date:</b>
+  <%= @touchpoint.touchpoint_date %>
+</p>
+
+<p>
+  <b>Touchpoint time:</b>
+  <%= @touchpoint.touchpoint_time %>
+</p>
+
+
+<%= link_to 'Edit', edit_touchpoint_path(@touchpoint) %> |
+<%= link_to 'Back', touchpoints_path %>

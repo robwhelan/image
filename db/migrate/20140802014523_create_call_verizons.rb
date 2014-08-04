@@ -6,6 +6,7 @@ class CreateCallVerizons < ActiveRecord::Migration
       t.string :call_direction
       t.string :contact_number
       t.string :call_duration
+      t.boolean :unassigned_contact
 
       t.timestamps
     end
