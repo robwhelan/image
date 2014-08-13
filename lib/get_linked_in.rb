@@ -1,31 +1,5 @@
-#API Key:
-#77m935zjd9gy37
+module GetLinkedIn
 
-#Secret Key:
-#W0nQQ6KSSl2tzuFj
-
-#OAuth User Token:
-#95fe1852-16d7-4f8b-bef7-3337dc958b01
-
-#OAuth User Secret:
-#61c9ce0b-62f4-443f-8ad3-c86b10c5c4fc
-
-
-#pin
-#58070
-
-#require 'linkedin'
-# get your api keys at https://www.linkedin.com/secure/developer
-#client = LinkedIn::Client.new('77m935zjd9gy37', 'W0nQQ6KSSl2tzuFj')
-
-#request_token = client.request_token({}, :scope => "r_basicprofile")
-#rtoken = request_token.token
-#rsecret = request_token.secret
-
-#pin = 58070
-#client.authorize_from_request(rtoken, rsecret, pin)
-
-#client.authorize_from_access("fa65754a-bc12-46d6-8115-6c56bac8ec69", "5d119216-c410-4b9e-a46c-aba0b4958957")
 def get_invitations(initiator, user)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
@@ -33,7 +7,7 @@ def get_invitations(initiator, user)
     puts "got to landing page"
     form = agent.page.form_with :name => 'login'
     form.session_key    = 'whelan@gmail.com'
-    form.session_password = 'Susannah2'
+    form.session_password = ''
     form.submit
     puts "submitted username and password"
 
@@ -61,7 +35,7 @@ def get_invitations(initiator, user)
           if (invitation.at('.detail-link').text.to_s == "\nJoin my network on LinkedIn\n" || 
               invitation.at('.detail-link').text.to_s == "\nInvitation to connect on LinkedIn\n")
                 invite = user.linked_in_invitations.new
-                  invite.name = invitation.at('.participants').children.last.text
+                  invite.name = invitation.at('.participants').children.last.text.strip
                   invite.date_sent = invitation.at('.date').at('.time-millis').text
                   invite.initiator = initiator
                   if invitation.at('.item-status').nil?
@@ -98,7 +72,7 @@ def get_messages(initiator, user)
 
     form = agent.page.form_with :name => 'login'
     form.session_key    = 'whelan@gmail.com'
-    form.session_password = 'Susannah2'
+    form.session_password = ''
     form.submit
 
     if initiator == "outbound"
@@ -128,7 +102,7 @@ def get_messages(initiator, user)
               puts "this is an invite"
           else
             msg = user.linked_in_messages.new
-            msg.name = message.at('.participants').children.last.text
+            msg.name = message.at('.participants').children.last.text.strip
             msg.date_sent = message.at('.date').at('.time-millis').text
             msg.initiator = initiator
           
@@ -154,3 +128,5 @@ def get_messages(initiator, user)
 
     end #for
 end #get_messages
+
+end #GetLinkedIn

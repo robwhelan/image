@@ -3,6 +3,10 @@ class ContactsController < ApplicationController
   # GET /contacts.json
   def index
     @contacts = Contact.all
+    
+    if params[:contact]
+      @contact_highlight = Contact.find(params[:contact])
+    end
 
     respond_to do |format|
       format.html # index.html.erb

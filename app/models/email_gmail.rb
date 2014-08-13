@@ -11,7 +11,7 @@ class EmailGmail < ActiveRecord::Base
     contact = Contact.find_by_handle_email(self.contact_email)
     if contact
       self.update_attributes(:contact_id => contact.id)
-      create_touchpoint
+      #create_touchpoint
     else
       puts "contact doesn't exist yet"
     end

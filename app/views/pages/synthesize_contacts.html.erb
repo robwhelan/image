@@ -1,0 +1,102 @@
+
+<button class="btn btn-lg btn-success" id="contactSynthesized">Go</button>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-3">
+			<h2 id="chosenLinkedIn"></h2>
+		</div>
+		<div class="col-xs-3">
+			<h2 id="chosenEmail"></h2>
+		</div>
+		<div class="col-xs-3">
+			<h2 id="chosenPhone"></h2>
+		</div>
+	</div><!-- /row -->
+		
+	<div class="row">
+		<div class="col-xs-3">
+			<div id="linkedInList">
+				<input class="search form-control">
+				<h1>Linked In</h1>
+				<ul class="list">
+					<% @unassigned_linked_in_names.each do |name| %>
+						<%= render '/pages/contacts/selector_block', 
+							:major_name => name, 
+							:minor_name => nil,
+							:category => "linked_in" %>
+					<% end %>
+				</ul>
+			</div><!-- /linked in list -->
+		</div>
+		<div class="col-xs-3">
+			<div id="emailList">
+				<input class="search form-control">
+				<h1>Email</h1>
+				<ul class="list">
+					<% @unassigned_emails.each do |email| %>
+						<%= render '/pages/contacts/selector_block', 
+							:major_name => email.contact_email, 
+							:minor_name => email.contact_name,
+							:category => "email" %>
+					<% end %>
+				</ul>
+			</div><!-- /linked in list -->
+		</div>
+		<div class="col-xs-3">
+			<div id="phoneList">
+				<input class="search form-control">
+				<h1>Phone</h1>
+				<ul class="list">
+					<% @unassigned_phones.each do |phone| %>
+						<%= render '/pages/contacts/selector_block', 
+							:major_name => phone.to_s, 
+							:minor_name => nil,
+							:category => "phone" %>
+					<% end %>
+				</ul>
+			</div><!-- /linked in list -->
+		</div>
+	</div><!-- /row -->
+</div><!-- /container -->
+
+	<script>
+	var email;
+	var phone;
+	var linked_in;
+	var params
+	
+	$('.email').click(function(){
+		email = $(this).attr("data-capture");
+		$('#chosenEmail').html(email);
+	})
+	$('.phone').click(function(){
+		phone = $(this).attr("data-capture");
+		$('#chosenPhone').html(phone);
+	})
+	$('.linked_in').click(function(){
+		linked_in = $(this).attr("data-capture");
+		$('#chosenLinkedIn').html(linked_in);
+	})
+	
+	$('#contactSynthesized').click(function(){
+		params = 	'email=' + email + '&' +
+					'phone=' + phone + '&' +
+					'linked_in=' + linked_in;
+		$.get('/pages/build_contact?' + params);
+	})
+	
+	var optionsLinkedIn = {
+	    valueNames: [ 'linked_in' ]
+	};
+	var optionsEmail = {
+	    valueNames: [ 'email' ]
+	};
+	var optionsPhone = {
+	    valueNames: [ 'phone' ]
+	};
+
+	var listLinkedIn = new List('linkedInList', optionsLinkedIn);
+	var listEmail = new List('emailList', optionsEmail);
+	var listPhone = new List('phoneList', optionsPhone);
+	
+	</script>

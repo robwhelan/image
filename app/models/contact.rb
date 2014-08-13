@@ -6,41 +6,40 @@ class Contact < ActiveRecord::Base
   has_many :linked_in_invitations
   has_many :linked_in_messages
   has_many :text_verizons
+  belongs_to :user
   
-  after_create :assign_comm_history
-  
-  def assign_comm_history
-    assign_data_points
-    create_touchpoints
-  end
+  after_create :assign_data_points
+  after_update :assign_data_points
   
   def assign_data_points
     CallVerizon.where(:contact_number => self.handle_phone).each do |e|
-      e.contact_id = self.id
-      e.save
+      set_contact_id(e)
     end
     
     TextVerizon.where(:text_contact_number => self.handle_phone).each do |e|
-      e.contact_id = self.id
-      e.save
+      set_contact_id(e)
     end
 
     EmailGmail.where(:contact_email => self.handle_email).each do |e|
-      e.contact_id = self.id
-      e.save
+      set_contact_id(e)
     end
   
     LinkedInInvitation.where(:name => self.handle_linked_in).each do |e|
-      e.contact_id = self.id
-      e.save
+      set_contact_id(e)
     end
 
     LinkedInMessage.where(:name => self.handle_linked_in).each do |e|
-      e.contact_id = self.id
-      e.save
+      set_contact_id(e)
     end
   end
   
+  def set_contact_id(data)
+    if data.contact_id.nil?
+      data.contact_id = self.id
+      data.save
+    end
+  end
+
   def create_touchpoints
     #go through all the data models to create touchpoints from them
   end

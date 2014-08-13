@@ -7,6 +7,7 @@ class CallVerizon < ActiveRecord::Base
 
   after_create :assign_contact
   after_update :create_touchpoint
+
   private
   
   def assign_contact
@@ -24,7 +25,8 @@ class CallVerizon < ActiveRecord::Base
       name: 'phone_call',
       direction: self.call_direction,
       touchpoint_date: self.call_date,
-      subject: self,
+      subject_id: self.id,
+      subject_type: self.class.name,
       user: self.user,
       contact: self.contact
       )

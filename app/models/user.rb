@@ -14,4 +14,10 @@ class User < ActiveRecord::Base
   has_many :linked_in_invitations
   has_many :linked_in_messages
   has_many :text_verizons
+  has_many :contacts
+
+  def recent_touchpoints(limit)
+    touchpoints.order('created_at DESC').limit(limit)
+  end
+
 end

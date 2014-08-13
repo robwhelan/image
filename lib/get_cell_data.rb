@@ -1,3 +1,5 @@
+module GetCellData
+
 def get_calls(user)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
@@ -9,6 +11,8 @@ def get_calls(user)
     puts 'submitted phone number form'
 
     #challengequestion
+#    if agent.page.title == "My Verizon"
+#      puts "weird page title present, going to password"
     if agent.page.title == "My Verizon Secret Question"
       agent.page.form.IDToken1 = "washingtondc"
       agent.page.form.submit
@@ -17,7 +21,7 @@ def get_calls(user)
 
     #password
     if agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
-      agent.page.form.IDToken2 = "Whidbey3Downing"
+      agent.page.form.IDToken2 = ""
       agent.page.form.submit
     end
     puts 'submitted password'
@@ -86,7 +90,7 @@ def get_texts(user)
 
     #password
     if agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
-      agent.page.form.IDToken2 = "Whidbey3Downing"
+      agent.page.form.IDToken2 = ""
       agent.page.form.submit
     end
     puts 'submitted password'
@@ -133,3 +137,5 @@ def get_texts(user)
     end # td block
     
 end #get texts
+
+end #GetCellData

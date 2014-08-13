@@ -1,8 +1,10 @@
+module GetEmail
+  
 def get_gmail_messages(msg_direction, user)
   require 'gmail'
 
   username = "whelan@gmail.com"
-  password = "Epula10roast"
+  password = ""
   gmail = Gmail.new(username, password)
 
   if (msg_direction == "outbound")
@@ -21,13 +23,17 @@ def get_gmail_messages(msg_direction, user)
   end
 
   if msg_direction == "outbound"
-    messages.last(20).each do |msg|
+    messages.last(100).each do |msg|
       if newest < msg.date
         e = user.email_gmails.new
         e.date_sent = msg.date
         e.subject = msg.subject
         e.contact_email = msg.smtp_envelope_to[0] #gets recipient email
-        e.contact_name = msg.header_fields[3].field.display_names[0] #gets recipient display name
+        begin
+          e.contact_name = msg.header_fields[3].field.display_names[0] #gets recipient display name
+        rescue NoMethodError
+          e.contact_name = ""
+        end
         e.direction = msg_direction
         e.message_id = msg.message.message_id
         e.save
@@ -36,7 +42,7 @@ def get_gmail_messages(msg_direction, user)
       end #if new
     end #each message
   elsif msg_direction == "inbound"
-    messages.last(20).each do |msg|
+    messages.last(100).each do |msg|
       if newest < msg.date
         e = user.email_gmails.new
         e.date_sent = msg.date
@@ -71,3 +77,5 @@ def get_gmail_messages(msg_direction, user)
   end #outbound / inbound
 
 end #get_gmail_messages
+
+end #GetEmail

@@ -18,11 +18,10 @@ ActiveRecord::Schema.define(:version => 20140804144024) do
     t.string   "call_direction"
     t.string   "contact_number"
     t.string   "call_duration"
-    t.boolean  "unassigned_contact"
     t.integer  "contact_id"
     t.integer  "user_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   add_index "call_verizons", ["contact_id"], :name => "index_call_verizons_on_contact_id"
@@ -52,11 +51,10 @@ ActiveRecord::Schema.define(:version => 20140804144024) do
     t.string   "direction"
     t.string   "contact_name"
     t.string   "message_id"
-    t.boolean  "unassigned_contact"
     t.integer  "contact_id"
     t.integer  "user_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   add_index "email_gmails", ["contact_id"], :name => "index_email_gmails_on_contact_id"
@@ -68,11 +66,10 @@ ActiveRecord::Schema.define(:version => 20140804144024) do
     t.boolean  "accepted"
     t.string   "initiator"
     t.string   "invitation_id"
-    t.boolean  "unassigned_contact"
     t.integer  "contact_id"
     t.integer  "user_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   add_index "linked_in_invitations", ["contact_id"], :name => "index_linked_in_invitations_on_contact_id"
@@ -84,7 +81,6 @@ ActiveRecord::Schema.define(:version => 20140804144024) do
     t.string   "initiator"
     t.boolean  "is_a_reply_to_outbound"
     t.string   "message_id"
-    t.boolean  "unassigned_contact"
     t.integer  "contact_id"
     t.integer  "user_id"
     t.datetime "created_at",             :null => false
@@ -98,7 +94,6 @@ ActiveRecord::Schema.define(:version => 20140804144024) do
     t.datetime "text_date"
     t.string   "text_contact_number"
     t.string   "text_direction"
-    t.boolean  "unassigned_contact"
     t.integer  "contact_id"
     t.integer  "user_id"
     t.datetime "created_at",          :null => false
@@ -116,7 +111,6 @@ ActiveRecord::Schema.define(:version => 20140804144024) do
     t.string   "name",            :null => false
     t.string   "direction",       :null => false
     t.date     "touchpoint_date"
-    t.time     "touchpoint_time"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
