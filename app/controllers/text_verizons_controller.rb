@@ -2,7 +2,7 @@ class TextVerizonsController < ApplicationController
   # GET /text_verizons
   # GET /text_verizons.json
   def index
-    @text_verizons = TextVerizon.all
+    @text_verizons = current_user.text_verizons.order(:text_date).reverse
 
     respond_to do |format|
       format.html # index.html.erb

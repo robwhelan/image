@@ -12,6 +12,8 @@ gem 'ruby-gmail'
 gem 'shared-mime-info'
 gem 'mail'
 gem 'devise'
+gem 'acts-as-taggable-on'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

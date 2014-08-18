@@ -1,6 +1,4 @@
-<li>
 	<span class="glyphicon glyphicon-comment"></span>
 	<span class="glyphicon glyphicon-arrow-down"></span>
-	<%= subject.text_date %>
+	<%= subject.text_date.localtime.strftime("%m/%d/%y %I:%M%p") %>
 text received
-</li>

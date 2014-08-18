@@ -1,0 +1,7 @@
+<h3>Tags</h3>
+	<%= form_tag( add_tags_contact_path(contact), remote: true, class: 'form-inline') do %>
+		<%= text_field_tag 'tags', nil, placeholder: 'Create a tag', class: 'form-control' %>
+		<%= submit_tag 'Add', class: 'btn btn-success' %>
+		<%= hidden_field_tag 'contact', contact %>
+	<% end %>
+<hr class="hr"/>

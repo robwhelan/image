@@ -8,16 +8,20 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :handle_phone, :handle_linked_in
   # attr_accessible :title, :body
   
-  has_many :touchpoints
-  has_many :call_verizons
-  has_many :email_gmails
-  has_many :linked_in_invitations
-  has_many :linked_in_messages
-  has_many :text_verizons
-  has_many :contacts
+  has_many :touchpoints, dependent: :destroy
+  has_many :call_verizons, dependent: :destroy
+  has_many :email_gmails, dependent: :destroy
+  has_many :linked_in_invitations, dependent: :destroy
+  has_many :linked_in_messages, dependent: :destroy
+  has_many :text_verizons, dependent: :destroy
+  has_many :contacts, dependent: :destroy
 
   def recent_touchpoints(limit)
     touchpoints.order('created_at DESC').limit(limit)
+  end
+  
+  def contacts_shown_as_actionable
+    self.contacts.where(:show_as_actionable => true)
   end
 
 end

@@ -1,0 +1,7 @@
+$('#tags').val("");
+$('#contactTagDetail').html("");
+<% @tags.each do |tag| %>
+	$('#contactTagDetail').append(
+		"<%= j render partial: "/contacts/tags", :locals => { :tag => tag} %>"
+		);
+<% end %>

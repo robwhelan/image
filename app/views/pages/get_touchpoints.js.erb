@@ -1,7 +1,19 @@
-$('#contactDetail').html("");
+$('#contactDetail,#contactTagDetail,#contactTagHeader').html("");
 $('#contactDetail').append("<h1><%= @contact.handle_linked_in %></h1>");
 <% @touchpoints.each do |t| %>
 	$('#contactDetail').append(
-		"<%= j render partial: "/touchpoints/partials/#{t.name}_#{t.direction}_current_user", :locals => { :subject => t.subject} %>"
+		"<li>" +
+		"<%= j render partial: "/touchpoints/partials/#{t.name}_#{t.direction}_current_user", :locals => { :subject => t.subject} %>" +
+		"</li>"
+		);
+<% end %>
+
+$('#contactTagHeader').append(
+	"<%= j render partial: "/contacts/tag_form", :locals => { :contact => @contact.id } %>"
+	);
+
+<% @tags.each do |tag| %>
+	$('#contactTagDetail').append(
+		"<%= j render partial: "/contacts/tags", :locals => { :tag => tag} %>"
 		);
 <% end %>

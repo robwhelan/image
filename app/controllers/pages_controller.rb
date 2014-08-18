@@ -7,6 +7,18 @@ class PagesController < ApplicationController
     get_gmail_messages("inbound", current_user)
     get_gmail_messages("outbound", current_user)
   end
+  
+  def update_linked_in
+    get_messages("inbound", current_user)
+    get_messages("outbound", current_user)
+    get_invitations("inbound", current_user)
+    get_invitations("outbound", current_user)
+  end
+  
+  def update_cell_data
+    get_calls(current_user)
+    get_texts(current_user)
+  end
 
   def synthesize_contacts
     @unassigned_phones = unique_phone_numbers
@@ -18,26 +30,34 @@ class PagesController < ApplicationController
     email = params[:email]
     phone = params[:phone]
     linked_in = params[:linked_in]
-    current_user.contacts.create(
+    contact = current_user.contacts.create(
       :handle_email => email,
       :handle_phone => phone,
       :handle_linked_in => linked_in)
-      
+    flash[:notice] = "#{contact.handle_linked_in} created!"
       respond_to do |format|
         format.js
       end
   end
   
-  def open_touchpoints
-    @contacts = current_user.contacts
+  def status
+    @contacts = current_user.contacts_shown_as_actionable
     @contacts_inbound = []
     @contacts_outbound = []
+
+    if params[:tag]
+      @contacts = @contacts.tagged_with(params[:tag])
+    end
+    
     get_open_comms(@contacts, @contacts_inbound, @contacts_outbound)
+    @all_tags = ActsAsTaggableOn::Tag.all
   end
 
   def get_touchpoints
     @contact = Contact.find(params[:contact_id])
     @touchpoints = @contact.touchpoints.order(:touchpoint_date).reverse
+    @tags = @contact.tag_list
+    @all_tags = ActsAsTaggableOn::Tag.all
   end
 
 private

@@ -1,23 +1,30 @@
 ImageLook::Application.routes.draw do
 
+  root :to => "pages#status"
   get "pages/synthesize_contacts"
   get "products/show_products"
   get "pages/build_contact"
   get "pages/get_touchpoints"
-  get "pages/open_touchpoints"
+  get "pages/status"
   get "pages/update_gmail"
+  get "pages/update_linked_in"
+  get "pages/update_cell_data"
   
   resources :touchpoints
   devise_for :users
 
-  resources :contacts
+  resources :contacts do
+    member do
+      get :show_contact_as_ignored
+      post :add_tags
+    end
+  end
   resources :text_verizons
   resources :linked_in_messages
   resources :linked_in_invitations
   resources :call_verizons
   resources :email_gmails
 
-  root to: "contacts#index"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

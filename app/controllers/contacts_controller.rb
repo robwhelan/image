@@ -2,7 +2,7 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = Contact.all
+    @contacts = current_user.contacts.order(:handle_linked_in)
     
     if params[:contact]
       @contact_highlight = Contact.find(params[:contact])
@@ -84,4 +84,17 @@ class ContactsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def show_contact_as_ignored
+    @contact = Contact.find(params[:id])
+    @contact.update_attributes(:show_as_actionable => false)
+  end
+  
+  def add_tags
+    @contact = Contact.find(params[:contact])
+    @contact.tag_list.add(params[:tags])
+    @contact.save
+    @tags = @contact.tag_list
+  end
+
 end

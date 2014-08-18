@@ -1,12 +1,14 @@
 class Contact < ActiveRecord::Base
-  attr_accessible :address_1, :address_2, :city, :first_name, :handle_email, :handle_linked_in, :handle_phone, :last_name, :zip_code
-  has_many :touchpoints
-  has_many :call_verizons
-  has_many :email_gmails
-  has_many :linked_in_invitations
-  has_many :linked_in_messages
-  has_many :text_verizons
+  attr_accessible :address_1, :address_2, :city, :first_name, :handle_email, :handle_linked_in, :handle_phone, :last_name, :zip_code, :show_as_actionable
+  has_many :touchpoints, dependent: :destroy
+  has_many :call_verizons, dependent: :destroy
+  has_many :email_gmails, dependent: :destroy
+  has_many :linked_in_invitations, dependent: :destroy
+  has_many :linked_in_messages, dependent: :destroy
+  has_many :text_verizons, dependent: :destroy
   belongs_to :user
+  
+  acts_as_taggable
   
   after_create :assign_data_points
   after_update :assign_data_points
@@ -42,6 +44,10 @@ class Contact < ActiveRecord::Base
 
   def create_touchpoints
     #go through all the data models to create touchpoints from them
+  end
+  
+  def most_recent_touchpoint
+    self.touchpoints.order(:touchpoint_date).last
   end
   
 end

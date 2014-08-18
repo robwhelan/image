@@ -1,18 +1,20 @@
 <div class="container">
 	<div class="row">
-		<div class="col-xs-2" id="contactList">
-			<ul>
+		<div class="col-xs-3" id="contactList">
+			<input class="search form-control">
+			<ul class="list list-unstyled">
 				<% @contacts.each do |contact| %>
 					<li>
 						<a class="contactName" data-contactId="<%= contact.id %>">
-							<h3><%= contact.handle_linked_in %></h3>
+							<h3 class="contactName"><%= contact.handle_linked_in %></h3>
 						</a>
 					</li>
 				<% end %>
 			</ul>	
 		</div><!-- / col contact list-->
-		<div class="col-xs-10">
-			<ul id="contactDetail">
+		<div class="col-xs-6">
+			<div class="affix">
+			<ul class="list-unstyled" id="contactDetail">
 				<% if @contact_highlight %>
 					<h1><%= @contact_highlight.handle_linked_in %></h1>
 					<% @contact_highlight.touchpoints.order(:touchpoint_date).reverse.each do |t| %>
@@ -20,7 +22,22 @@
 					<% end %>
 				<% end %>
 			</ul>
+			</div><!-- /div affix -->
 		</div><!-- / col contact detail -->
+		<div class="col-xs-3">
+			<div id="contactTagHeader">
+				<% if @contact_highlight %>
+					<%= render 'contacts/tag_form', :contact => @contact_highlight.id %>
+				<% end %>
+			</div><!-- /div -->
+			<div id="contactTagDetail">
+				<% if @contact_highlight %>
+					<% @contact_highlight.tags.each do |tag| %>
+						<%= render 'contacts/tags', :tag => tag %>
+					<% end %>
+				<% end %>
+			</div>
+		</div><!-- /div col -->
 	</div><!-- /row -->
 </div> <!-- container-->
 
@@ -29,4 +46,10 @@ $('.contactName').click(function(){
 	var contactId = $(this).attr("data-contactId");
 	$.get('/pages/get_touchpoints?contact_id=' + contactId);
 })
+
+var optionsContacts = {
+    valueNames: [ 'contactName' ]
+};
+var listContactNames = new List('contactList', optionsContacts);
+
 </script>

@@ -1,8 +1,6 @@
-<li>
-	<span class="glyphicon glyphicon-envelope"></span>
+<span class="glyphicon glyphicon-envelope"></span>
 	<span class="glyphicon glyphicon-arrow-down"></span>
 	
-<%= subject.date_sent %>
+<%= subject.date_sent.localtime.strftime("%m/%d/%y %I:%M%p") %>
 email received
 <%= subject.subject %>
-</li>

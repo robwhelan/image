@@ -1,5 +1,6 @@
 
 <button class="btn btn-lg btn-success" id="contactSynthesized">Go</button>
+<%= image_tag 'spinning.gif', :class => 'hidden', :id => 'spinningGif' %>
 <div class="container">
 	<div class="row">
 		<div class="col-xs-3">
@@ -82,6 +83,8 @@
 		params = 	'email=' + email + '&' +
 					'phone=' + phone + '&' +
 					'linked_in=' + linked_in;
+		$('#contactSynthesized').addClass('hidden');
+		$('#spinningGif').removeClass('hidden');		
 		$.get('/pages/build_contact?' + params);
 	})
 	

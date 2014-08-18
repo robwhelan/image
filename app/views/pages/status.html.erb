@@ -1,0 +1,50 @@
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+				<%= link_to pages_status_path do %>
+					<li>All</li>
+				<% end %>
+			<% @all_tags.each do |tag| %>
+				<%= link_to pages_status_path(:tag => tag.name) do %>
+					<li><%= tag.name %></li>
+				<% end %>
+			<% end %>
+         </ul>
+    </div>
+    <div id="page-content-wrapper">
+        <div class="page-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+						<ul class="nav nav-tabs" role="tablist">
+						  <li class="active"><a href="#contactInbound" role="tab" data-toggle="tab">Waiting on you</a></li>
+						  <li><a href="#contactOutbound" role="tab" data-toggle="tab">Waiting on them</a></li>
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div class="tab-pane active" id="contactInbound">
+								<table class="table table-hover">
+									<% @contacts_inbound.each do |contact| %>
+										<%= render :partial => '/pages/contacts/open_comms', :locals =>
+												{ 	:contact => contact, 
+													:touchpoint => contact.most_recent_touchpoint } %>
+									<% end %>
+								</table>
+							</div>
+							<div class="tab-pane" id="contactOutbound">
+								<table class="table table-hover">
+									<% @contacts_outbound.each do |contact| %>
+										<%= render :partial => '/pages/contacts/open_comms', :locals =>
+												{ 	:contact => contact, 
+													:touchpoint => contact.most_recent_touchpoint } %>
+									<% end %>
+								</table>
+							</div>
+						</div><!-- / tab content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

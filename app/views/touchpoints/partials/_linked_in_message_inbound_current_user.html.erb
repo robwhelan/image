@@ -1,6 +1,4 @@
-<li>
 	<i class="fa fa-linkedin-square"></i>
 	<span class="glyphicon glyphicon-arrow-down"></span>
-	<%= subject.date_sent %>
+	<%= subject.date_sent.localtime.strftime("%m/%d/%y %I:%M%p") %>
 linked in message from
-</li>

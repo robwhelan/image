@@ -1,5 +1,16 @@
-<li>
-	<%= link_to contacts_path(:contact => contact.id) do %>
-		<%= contact.handle_linked_in %>
-	<% end %>
-</li>
+<tr id="contactID<%= contact.id %>" >
+	<td>
+		<%= link_to contacts_path(:contact => contact.id) do %>
+			<h4><%= contact.handle_linked_in %></h4>
+		<% end %>
+	</td>
+	<td>
+		<h4><%= render "/touchpoints/partials/#{touchpoint.name}_#{touchpoint.direction}_current_user", :subject => touchpoint.subject %>
+		</h4>
+	</td>
+	<td>
+		<%= link_to show_contact_as_ignored_contact_path(contact.id), :data => {:remote => true} do %>
+			<h4><span class="glyphicon glyphicon-remove-sign"></span></h4>
+		<% end %>
+	</td>
+</tr>

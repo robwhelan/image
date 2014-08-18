@@ -1,7 +1,5 @@
-<li>
-	<span class="glyphicon glyphicon-earphone"></span>
-	<span class="glyphicon glyphicon-arrow-down"></span>
-	<span><%= subject.call_date %></span>
-	<span>call from</span>
-	<span><%= subject.call_duration %> mins</span>
-</li>
+<span class="glyphicon glyphicon-earphone"></span>
+<span class="glyphicon glyphicon-arrow-down"></span>
+<span><%= subject.call_date.localtime.strftime("%m/%d/%y %I:%M%p") %></span>
+<span>call from</span>
+<span><%= subject.call_duration %> mins</span>
