@@ -1,0 +1,41 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<%= form_tag( pages_update_all_path, method: "get", :class => "form" ) do %>
+
+			    <div class="form-group">
+					<%= label_tag(:gmail_username, "Gmail username:") %>
+				    <%= text_field_tag(:gmail_username, nil, :class => "form-control") %>
+
+				    <%= label_tag(:gmail_password, "Gmail password:") %>
+				    <%= password_field_tag(:gmail_password, nil, :class => "form-control") %>
+				</div>
+				<hr class="hr"/>
+			    <div class="form-group">
+				    <%= label_tag(:linked_in_email, "LinkedIn email:") %>
+				    <%= text_field_tag(:linked_in_email, nil, :class => "form-control") %>
+
+				    <%= label_tag(:linked_in_password, "LinkedIn password:") %>
+				    <%= password_field_tag(:linked_in_password, nil, :class => "form-control") %>
+				</div>
+				<hr class="hr"/>
+			    <div class="form-group">
+				    <%= label_tag(:verizon_phone_primary, "Verizon Wireless Account Owner Phone Number:") %>
+				    <%= text_field_tag(:verizon_phone_primary, nil, :class => "form-control") %>
+
+				    <%= label_tag(:verizon_secret_question, "Secret Question Response:") %>
+				    <%= password_field_tag(:verizon_secret_question, nil, :class => "form-control") %>
+
+				    <%= label_tag(:verizon_password, "Password:") %>
+				    <%= password_field_tag(:verizon_password, nil, :class => "form-control") %>
+
+				    <%= label_tag(:verizon_phone_account_data, "Your Cell Number:") %>
+				    <%= text_field_tag(:verizon_phone_account_data, nil, :class => "form-control") %>
+				</div>
+			    <%= submit_tag("Go", :class => "form-control btn btn-primary") %>
+			<% end %>
+		</div>
+		<div class="col-md-3"></div>
+	</div><!-- /row -->
+</div><!-- /container -->

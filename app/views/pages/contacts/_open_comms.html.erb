@@ -9,8 +9,8 @@
 		</h4>
 	</td>
 	<td>
-		<%= link_to show_contact_as_ignored_contact_path(contact.id), :data => {:remote => true} do %>
-			<h4><span class="glyphicon glyphicon-remove-sign"></span></h4>
+		<%= link_to toggle_contact_as_actionable_contact_path(contact.id, :make_actionable => make_actionable), :data => {:remote => true} do %>
+			<h4><span class="glyphicon glyphicon-<%= glyphicon %>"></span></h4>
 		<% end %>
 	</td>
 </tr>

@@ -24,4 +24,8 @@ class User < ActiveRecord::Base
     self.contacts.where(:show_as_actionable => true)
   end
 
+  def contacts_shown_as_ignored
+    self.contacts.where(:show_as_actionable => false)
+  end
+
 end

@@ -9,13 +9,15 @@ ImageLook::Application.routes.draw do
   get "pages/update_gmail"
   get "pages/update_linked_in"
   get "pages/update_cell_data"
+  get "pages/update_all"
+  get "pages/update_data"
   
   resources :touchpoints
   devise_for :users
 
   resources :contacts do
     member do
-      get :show_contact_as_ignored
+      get :toggle_contact_as_actionable
       post :add_tags
     end
   end

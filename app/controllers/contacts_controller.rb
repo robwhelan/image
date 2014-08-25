@@ -85,9 +85,9 @@ class ContactsController < ApplicationController
     end
   end
   
-  def show_contact_as_ignored
+  def toggle_contact_as_actionable
     @contact = Contact.find(params[:id])
-    @contact.update_attributes(:show_as_actionable => false)
+    @contact.update_attributes(:show_as_actionable => params[:make_actionable])
   end
   
   def add_tags

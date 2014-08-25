@@ -1,10 +1,8 @@
 module GetEmail
   
-def get_gmail_messages(msg_direction, user)
+def get_gmail_messages(msg_direction, user, username, password)
   require 'gmail'
 
-  username = "whelan@gmail.com"
-  password = ""
   gmail = Gmail.new(username, password)
 
   if (msg_direction == "outbound")

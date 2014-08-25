@@ -1,13 +1,13 @@
 module GetCellData
 
-def get_calls(user)
+def get_calls(user, phone_primary, secret_question, password, phone_data)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
     agent.get "http://www.verizonwireless.com/"
     puts 'got to home page'
     puts agent.page.title
     #form = agent.page.form_with :id => 'vgnSignInForm'
-    agent.page.forms[0].IDToken1 = '8439913627'
+    agent.page.forms[0].IDToken1 = phone_primary
     agent.page.forms[0].submit
     puts 'submitted phone number form'
     puts agent.page.title
@@ -17,7 +17,7 @@ def get_calls(user)
     end
 
     if agent.page.title == "My Verizon Secret Question"
-      agent.page.form.IDToken1 = "washingtondc"
+      agent.page.form.IDToken1 = secret_question
       agent.page.form.submit
     end
     puts 'submitted challenged question'
@@ -25,7 +25,7 @@ def get_calls(user)
 
     #password
     if agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
-      agent.page.form.IDToken2 = ""
+      agent.page.form.IDToken2 = password
       agent.page.form.submit
     end
     puts 'submitted password'
@@ -36,7 +36,7 @@ def get_calls(user)
     puts 'got to voice data page'
     puts agent.page.title
     #select the proper account
-    agent.page.form_with(:name => 'leftnavform').selMTN="8439915656"
+    agent.page.form_with(:name => 'leftnavform').selMTN=phone_data
     agent.page.form_with(:name => 'leftnavform').submit
     puts 'updated selected device'
     puts agent.page.title
@@ -84,13 +84,13 @@ def get_calls(user)
     
 end #getcalls
 
-def get_texts(user)
+def get_texts(user, phone_primary, secret_question, password, phone_data)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
     agent.get "http://www.verizonwireless.com/"
     puts 'got to home page'
     form = agent.page.form_with :id => 'vgnSignInForm'
-    agent.page.forms[0].IDToken1 = '8439913627'
+    agent.page.forms[0].IDToken1 = phone_primary
     agent.page.forms[0].submit
     puts 'submitted phone number form'
 
@@ -99,13 +99,13 @@ def get_texts(user)
     end
 
     if agent.page.title == "My Verizon Secret Question"
-      agent.page.form.IDToken1 = "washingtondc"
+      agent.page.form.IDToken1 = secret_question
       agent.page.form.submit
     end
     puts 'submitted challenged question'
 
     if agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
-      agent.page.form.IDToken2 = ""
+      agent.page.form.IDToken2 = password
       agent.page.form.submit
     end
     puts 'submitted password'
@@ -114,7 +114,7 @@ def get_texts(user)
     agent.get ('https://wbillpay.verizonwireless.com/vzw/secure/services/myusageMsgDetails.action')
     puts 'got to text data page'
     #select the proper account
-    agent.page.form_with(:name => 'leftnavform').selMTN="8439915656"
+    agent.page.form_with(:name => 'leftnavform').selMTN=phone_data
     agent.page.form_with(:name => 'leftnavform').submit
     puts 'updated selected device'
     

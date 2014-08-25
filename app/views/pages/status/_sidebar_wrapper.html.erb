@@ -1,0 +1,14 @@
+<ul class="sidebar-nav">
+		<%= link_to pages_status_path do %>
+			<li>
+				<button id="allButton" style='margin:10px;' class='btn btn-block btn-default'>All</button>
+			</li>
+		<% end %>
+	<% @all_tags.each do |tag| %>
+		<%= link_to pages_status_path(:tag => tag.name) do %>
+			<li>
+				<button style='margin:10px;' class='btn btn-block btn-default'><%= tag.name %></button>
+			</li>
+		<% end %>
+	<% end %>
+ </ul>

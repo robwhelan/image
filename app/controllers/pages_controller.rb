@@ -3,21 +3,32 @@ class PagesController < ApplicationController
   include GetCellData
   include GetLinkedIn
   
-  def update_gmail
-    get_gmail_messages("inbound", current_user)
-    get_gmail_messages("outbound", current_user)
+  def update_all
+    update_gmail(     params[:gmail_username], 
+                      params[:gmail_password])
+    update_linked_in( params[:linked_in_email], 
+                      params[:linked_in_password])
+    update_cell_data( params[:verizon_phone_primary],
+                      params[:verizon_secret_question],
+                      params[:verizon_password],
+                      params[:verizon_phone_account_data])
   end
   
-  def update_linked_in
-    get_messages("inbound", current_user)
-    get_messages("outbound", current_user)
-    get_invitations("inbound", current_user)
-    get_invitations("outbound", current_user)
+  def update_gmail(username, password)
+    get_gmail_messages("inbound", current_user, username, password)
+    get_gmail_messages("outbound", current_user, username, password)
   end
   
-  def update_cell_data
-    get_calls(current_user)
-    get_texts(current_user)
+  def update_linked_in(username, password)
+    get_messages("inbound", current_user, username, password)
+    get_messages("outbound", current_user, username, password)
+    get_invitations("inbound", current_user, username, password)
+    get_invitations("outbound", current_user, username, password)
+  end
+  
+  def update_cell_data(phone_primary, secret_question, password, phone_data)
+    get_calls(current_user, phone_primary, secret_question, password, phone_data)
+    get_texts(current_user, phone_primary, secret_question, password, phone_data)
   end
 
   def synthesize_contacts
@@ -42,12 +53,16 @@ class PagesController < ApplicationController
   
   def status
     @contacts = current_user.contacts_shown_as_actionable
-    @contacts_inbound = []
-    @contacts_outbound = []
+    @ignored_contacts = current_user.contacts_shown_as_ignored
 
     if params[:tag]
       @contacts = @contacts.tagged_with(params[:tag])
+      @ignored_contacts = @ignored_contacts.tagged_with(params[:tag])
+      @tag = params[:tag]
     end
+    
+    @contacts_inbound = []
+    @contacts_outbound = []
     
     get_open_comms(@contacts, @contacts_inbound, @contacts_outbound)
     @all_tags = ActsAsTaggableOn::Tag.all

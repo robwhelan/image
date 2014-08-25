@@ -1,13 +1,13 @@
 module GetLinkedIn
 
-def get_invitations(initiator, user)
+def get_invitations(initiator, user, username, password)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
     agent.get "https://www.linkedin.com"
     puts "got to landing page"
     form = agent.page.form_with :name => 'login'
-    form.session_key    = 'whelan@gmail.com'
-    form.session_password = ''
+    form.session_key    = username
+    form.session_password = password
     form.submit
     puts "submitted username and password"
 
@@ -65,14 +65,14 @@ def get_invitations(initiator, user)
     end #for
 end #getInvitations
 
-def get_messages(initiator, user)
+def get_messages(initiator, user, username, password)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
     agent.get "https://www.linkedin.com"
 
     form = agent.page.form_with :name => 'login'
-    form.session_key    = 'whelan@gmail.com'
-    form.session_password = ''
+    form.session_key    = username
+    form.session_password = password
     form.submit
 
     if initiator == "outbound"

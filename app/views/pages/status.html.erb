@@ -1,34 +1,46 @@
 <div id="wrapper">
     <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-				<%= link_to pages_status_path do %>
-					<li>All</li>
-				<% end %>
-			<% @all_tags.each do |tag| %>
-				<%= link_to pages_status_path(:tag => tag.name) do %>
-					<li><%= tag.name %></li>
-				<% end %>
-			<% end %>
-         </ul>
+		<%= render 'pages/status/sidebar_wrapper' %>
     </div>
     <div id="page-content-wrapper">
         <div class="page-content">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+						<h1 id='tagHeader'>
+							<% if @tag %>
+								<h1><%= @tag %></h1>
+							<% else %>
+								<h1>All</h1>
+							<% end %>
 						<ul class="nav nav-tabs" role="tablist">
-						  <li class="active"><a href="#contactInbound" role="tab" data-toggle="tab">Waiting on you</a></li>
+						  <li class="active"><a href="#contactAll" role="tab" data-toggle="tab">All</a></li>
+						  <li><a href="#contactInbound" role="tab" data-toggle="tab">Waiting on you</a></li>
 						  <li><a href="#contactOutbound" role="tab" data-toggle="tab">Waiting on them</a></li>
+						  <li><a href="#contactIgnored" role="tab" data-toggle="tab">(Ignored)</a></li>
 						</ul>
 
 						<!-- Tab panes -->
 						<div class="tab-content">
-							<div class="tab-pane active" id="contactInbound">
+							<div class="tab-pane active" id="contactAll">
+								<table class="table table-hover">
+									<% @contacts.each do |contact| %>
+										<%= render :partial => '/pages/contacts/open_comms', :locals =>
+												{ 	:contact => contact, 
+													:touchpoint => contact.most_recent_touchpoint,
+													:make_actionable => "false",
+													:glyphicon => 'remove-circle' } %>
+									<% end %>
+								</table>
+							</div>
+							<div class="tab-pane" id="contactInbound">
 								<table class="table table-hover">
 									<% @contacts_inbound.each do |contact| %>
 										<%= render :partial => '/pages/contacts/open_comms', :locals =>
 												{ 	:contact => contact, 
-													:touchpoint => contact.most_recent_touchpoint } %>
+													:touchpoint => contact.most_recent_touchpoint,
+													:make_actionable => "false",
+													:glyphicon => 'remove-circle' } %>
 									<% end %>
 								</table>
 							</div>
@@ -37,7 +49,20 @@
 									<% @contacts_outbound.each do |contact| %>
 										<%= render :partial => '/pages/contacts/open_comms', :locals =>
 												{ 	:contact => contact, 
-													:touchpoint => contact.most_recent_touchpoint } %>
+													:touchpoint => contact.most_recent_touchpoint,
+													:make_actionable => "false",
+													:glyphicon => 'remove-circle' } %>
+									<% end %>
+								</table>
+							</div>
+							<div class="tab-pane" id="contactIgnored">
+								<table class="table table-hover">
+									<% @ignored_contacts.each do |contact| %>
+										<%= render :partial => '/pages/contacts/open_comms', :locals =>
+												{ 	:contact => contact, 
+													:touchpoint => contact.most_recent_touchpoint,
+													:make_actionable => "true",
+													:glyphicon => 'plus' } %>
 									<% end %>
 								</table>
 							</div>
