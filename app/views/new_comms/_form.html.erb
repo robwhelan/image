@@ -1,0 +1,57 @@
+<%= form_for(@new_comm) do |f| %>
+  <% if @new_comm.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@new_comm.errors.count, "error") %> prohibited this new_comm from being saved:</h2>
+
+      <ul>
+      <% @new_comm.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email_in %><br />
+    <%= f.number_field :email_in %>
+  </div>
+  <div class="field">
+    <%= f.label :email_out %><br />
+    <%= f.number_field :email_out %>
+  </div>
+  <div class="field">
+    <%= f.label :text_in %><br />
+    <%= f.number_field :text_in %>
+  </div>
+  <div class="field">
+    <%= f.label :text_out %><br />
+    <%= f.number_field :text_out %>
+  </div>
+  <div class="field">
+    <%= f.label :call_in %><br />
+    <%= f.number_field :call_in %>
+  </div>
+  <div class="field">
+    <%= f.label :call_out %><br />
+    <%= f.number_field :call_out %>
+  </div>
+  <div class="field">
+    <%= f.label :li_invite_in %><br />
+    <%= f.number_field :li_invite_in %>
+  </div>
+  <div class="field">
+    <%= f.label :li_invite_out %><br />
+    <%= f.number_field :li_invite_out %>
+  </div>
+  <div class="field">
+    <%= f.label :li_message_in %><br />
+    <%= f.number_field :li_message_in %>
+  </div>
+  <div class="field">
+    <%= f.label :li_message_out %><br />
+    <%= f.number_field :li_message_out %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,6 +1,6 @@
 module GetEmail
   
-def get_gmail_messages(msg_direction, user, username, password)
+def get_gmail_messages(msg_direction, username, password)
   require 'gmail'
 
   gmail = Gmail.new(username, password)
@@ -12,6 +12,7 @@ def get_gmail_messages(msg_direction, user, username, password)
   end
 
   messages = mbox.emails
+  user = self
 
   first_data_pull = user.email_gmails.where(:direction => msg_direction).empty?
   if first_data_pull

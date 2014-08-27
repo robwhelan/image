@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Email in:</b>
+  <%= @new_comm.email_in %>
+</p>
+
+<p>
+  <b>Email out:</b>
+  <%= @new_comm.email_out %>
+</p>
+
+<p>
+  <b>Text in:</b>
+  <%= @new_comm.text_in %>
+</p>
+
+<p>
+  <b>Text out:</b>
+  <%= @new_comm.text_out %>
+</p>
+
+<p>
+  <b>Call in:</b>
+  <%= @new_comm.call_in %>
+</p>
+
+<p>
+  <b>Call out:</b>
+  <%= @new_comm.call_out %>
+</p>
+
+<p>
+  <b>Li invite in:</b>
+  <%= @new_comm.li_invite_in %>
+</p>
+
+<p>
+  <b>Li invite out:</b>
+  <%= @new_comm.li_invite_out %>
+</p>
+
+<p>
+  <b>Li message in:</b>
+  <%= @new_comm.li_message_in %>
+</p>
+
+<p>
+  <b>Li message out:</b>
+  <%= @new_comm.li_message_out %>
+</p>
+
+
+<%= link_to 'Edit', edit_new_comm_path(@new_comm) %> |
+<%= link_to 'Back', new_comms_path %>

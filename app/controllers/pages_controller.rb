@@ -1,34 +1,30 @@
 class PagesController < ApplicationController
-  include GetEmail
-  include GetCellData
-  include GetLinkedIn
+#  include GetCellData
+#  include GetLinkedIn
   
   def update_all
-    update_gmail(     params[:gmail_username], 
-                      params[:gmail_password])
-    update_linked_in( params[:linked_in_email], 
-                      params[:linked_in_password])
-    update_cell_data( params[:verizon_phone_primary],
-                      params[:verizon_secret_question],
-                      params[:verizon_password],
-                      params[:verizon_phone_account_data])
-  end
-  
-  def update_gmail(username, password)
-    get_gmail_messages("inbound", current_user, username, password)
-    get_gmail_messages("outbound", current_user, username, password)
-  end
-  
-  def update_linked_in(username, password)
-    get_messages("inbound", current_user, username, password)
-    get_messages("outbound", current_user, username, password)
-    get_invitations("inbound", current_user, username, password)
-    get_invitations("outbound", current_user, username, password)
-  end
-  
-  def update_cell_data(phone_primary, secret_question, password, phone_data)
-    get_calls(current_user, phone_primary, secret_question, password, phone_data)
-    get_texts(current_user, phone_primary, secret_question, password, phone_data)
+
+    gmail_username =      params[:gmail_username]
+    gmail_password =      params[:gmail_password]
+    linked_in_username =  params[:linked_in_email]
+    linked_in_password =  params[:linked_in_password]
+    verizon_primary =     params[:verizon_phone_primary]
+    verizon_secret =      params[:verizon_secret_question]
+    verizon_password =    params[:verizon_password]
+    verizon_data =        params[:verizon_phone_account_data]
+
+    count = current_user.new_comms.create
+    count_record = count.id
+
+    current_user.delay.get_gmail_messages("inbound", gmail_username, gmail_password, count_record)
+    current_user.delay.get_gmail_messages("outbound", gmail_username, gmail_password, count_record)
+    current_user.delay.get_texts(verizon_primary, verizon_secret, verizon_password, verizon_data, count_record)
+    current_user.delay.get_calls(verizon_primary, verizon_secret, verizon_password, verizon_data, count_record)
+    current_user.delay.get_invitations("inbound", linked_in_username, linked_in_password, count_record)
+    current_user.delay.get_invitations("outbound", linked_in_username, linked_in_password, count_record)
+    current_user.delay.get_messages("inbound", linked_in_username, linked_in_password, count_record)
+    current_user.delay.get_messages("outbound", linked_in_username, linked_in_password, count_record)
+
   end
 
   def synthesize_contacts

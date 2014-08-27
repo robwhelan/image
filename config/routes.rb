@@ -26,7 +26,7 @@ ImageLook::Application.routes.draw do
   resources :linked_in_invitations
   resources :call_verizons
   resources :email_gmails
-
+  resources :new_comms
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

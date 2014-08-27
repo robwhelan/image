@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  email_in: 1
+  email_out: 1
+  text_in: 1
+  text_out: 1
+  call_in: 1
+  call_out: 1
+  li_invite_in: 1
+  li_invite_out: 1
+  li_message_in: 1
+  li_message_out: 1
+
+two:
+  email_in: 1
+  email_out: 1
+  text_in: 1
+  text_out: 1
+  call_in: 1
+  call_out: 1
+  li_invite_in: 1
+  li_invite_out: 1
+  li_message_in: 1
+  li_message_out: 1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140818182811) do
+ActiveRecord::Schema.define(:version => 20140826010408) do
 
   create_table "call_verizons", :force => true do |t|
     t.datetime "call_date"
@@ -44,6 +44,22 @@ ActiveRecord::Schema.define(:version => 20140818182811) do
   end
 
   add_index "contacts", ["user_id"], :name => "index_contacts_on_user_id"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0, :null => false
+    t.integer  "attempts",   :default => 0, :null => false
+    t.text     "handler",                   :null => false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "email_gmails", :force => true do |t|
     t.datetime "date_sent"
@@ -90,6 +106,24 @@ ActiveRecord::Schema.define(:version => 20140818182811) do
 
   add_index "linked_in_messages", ["contact_id"], :name => "index_linked_in_messages_on_contact_id"
   add_index "linked_in_messages", ["user_id"], :name => "index_linked_in_messages_on_user_id"
+
+  create_table "new_comms", :force => true do |t|
+    t.integer  "email_in"
+    t.integer  "email_out"
+    t.integer  "text_in"
+    t.integer  "text_out"
+    t.integer  "call_in"
+    t.integer  "call_out"
+    t.integer  "li_invite_in"
+    t.integer  "li_invite_out"
+    t.integer  "li_message_in"
+    t.integer  "li_message_out"
+    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "new_comms", ["user_id"], :name => "index_new_comms_on_user_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
