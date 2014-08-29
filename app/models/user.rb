@@ -395,8 +395,8 @@ class User < ActiveRecord::Base
       agent.get ('https://www.linkedin.com/inbox/' + inbox_route)
       puts "got to messages page"
       #get number of pages of messages
+      puts 'line 398'
       num_pages = agent.page.search('.page').text.to_s[/#{"of "}(.*?)#{"\n"}/m, 1].to_i
-
       user = self
       @new_comms = NewComm.find(count_record)
 
@@ -411,11 +411,16 @@ class User < ActiveRecord::Base
 
       for i in 0..num_pages
         agent.page.search('.item-content').each do |invitation|
+          puts 'line 414'
           if newest < Date.parse(invitation.at('.date').at('.time-millis').text)
+            puts 'line 416'
             if (invitation.at('.detail-link').text.to_s == "\nJoin my network on LinkedIn\n" || 
+              puts 'line 418'
                 invitation.at('.detail-link').text.to_s == "\nInvitation to connect on LinkedIn\n")
                   invite = user.linked_in_invitations.new
+                  puts 'line 421'
                     invite.name = invitation.at('.participants').children.last.text.strip
+                    puts 'line 423'
                     invite.date_sent = invitation.at('.date').at('.time-millis').text
                     invite.initiator = initiator
 
@@ -424,6 +429,7 @@ class User < ActiveRecord::Base
                     if invitation.at('.item-status').nil?
                       invite.accepted = false
                     else
+                      puts 'line 432'
                       if invitation.at('.item-status').text.to_s == "\n(Accepted)\n"
                         invite.accepted = true
                       else
