@@ -30,6 +30,21 @@ class User < ActiveRecord::Base
     self.contacts.where(:show_as_actionable => false)
   end
 
+  def set_encrypted_vault(email_user, email_password, linked_in_username, linked_in_password, verizon_primary, verizon_secret, verizon_password, verizon_data, vault_password)
+
+    self.encrypted_email_user =          AESCrypt.encrypt(email_user, vault_password)
+    self.encrypted_email_password =      AESCrypt.encrypt(email_password, vault_password)
+    self.encrypted_linked_in_username =  AESCrypt.encrypt(linked_in_username, vault_password)
+    self.encrypted_linked_in_password =  AESCrypt.encrypt(linked_in_password, vault_password)
+    self.encrypted_verizon_primary =     AESCrypt.encrypt(verizon_primary, vault_password)
+    self.encrypted_verizon_secret =      AESCrypt.encrypt(verizon_secret, vault_password)
+    self.encrypted_verizon_password =    AESCrypt.encrypt(verizon_password, vault_password)
+    self.encrypted_verizon_data =        AESCrypt.encrypt(verizon_data, vault_password)
+    
+    self.save
+      
+  end  
+
   def get_gmail_messages(msg_direction, username, password, count_record)
     require 'gmail'
 

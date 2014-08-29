@@ -1,9 +1,15 @@
 <div class="container">
+<h1>Set Up Connections</h1>
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
-			<%= form_tag( pages_update_all_path, method: "get", :class => "form" ) do %>
+			<%= form_tag( pages_save_vault_path, method: "get", :class => "form" ) do %>
 
+			    <div class="form-group">
+					<%= label_tag(:vault_password) %>
+				    <%= password_field_tag(:vault_password, nil, :class => "form-control") %>
+				</div>
+				<hr class="hr"/>
 			    <div class="form-group">
 					<%= label_tag(:gmail_username, "Gmail username:") %>
 				    <%= text_field_tag(:gmail_username, nil, :class => "form-control") %>

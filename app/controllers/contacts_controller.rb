@@ -28,7 +28,7 @@ class ContactsController < ApplicationController
   # GET /contacts/new
   # GET /contacts/new.json
   def new
-    @contact = Contact.new
+    @contact = current_user.contacts.new
 
     respond_to do |format|
       format.html # new.html.erb

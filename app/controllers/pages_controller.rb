@@ -1,9 +1,8 @@
 class PagesController < ApplicationController
 #  include GetCellData
 #  include GetLinkedIn
-  
-  def update_all
 
+  def save_vault
     gmail_username =      params[:gmail_username]
     gmail_password =      params[:gmail_password]
     linked_in_username =  params[:linked_in_email]
@@ -12,10 +11,31 @@ class PagesController < ApplicationController
     verizon_secret =      params[:verizon_secret_question]
     verizon_password =    params[:verizon_password]
     verizon_data =        params[:verizon_phone_account_data]
+    vault_password =      params[:vault_password]
+    
+    current_user.set_encrypted_vault( gmail_username, gmail_password, linked_in_username, linked_in_password, verizon_primary, verizon_secret, verizon_password, verizon_data, vault_password)
+    
+    respond_to do |format|
+      format.html { redirect_to pages_status_path, notice: 'Vault has been set. Update your data now!' }
+    end
+    
+  end
 
+  def update_data
+
+    vault_password = params[:vault_password]
     count = current_user.new_comms.create
     count_record = count.id
-
+    
+    gmail_username =      AESCrypt.decrypt(current_user.encrypted_email_user, vault_password)
+    gmail_password =      AESCrypt.decrypt(current_user.encrypted_email_password, vault_password)
+    verizon_primary =     AESCrypt.decrypt(current_user.encrypted_verizon_primary, vault_password)
+    verizon_secret =      AESCrypt.decrypt(current_user.encrypted_verizon_secret, vault_password)
+    verizon_password =    AESCrypt.decrypt(current_user.encrypted_verizon_password, vault_password)
+    verizon_data =        AESCrypt.decrypt(current_user.encrypted_verizon_data, vault_password)
+    linked_in_username =  AESCrypt.decrypt(current_user.encrypted_linked_in_username, vault_password)
+    linked_in_password =  AESCrypt.decrypt(current_user.encrypted_linked_in_password, vault_password)
+    
     current_user.delay.get_gmail_messages("inbound", gmail_username, gmail_password, count_record)
     current_user.delay.get_gmail_messages("outbound", gmail_username, gmail_password, count_record)
     current_user.delay.get_texts(verizon_primary, verizon_secret, verizon_password, verizon_data, count_record)
@@ -24,7 +44,11 @@ class PagesController < ApplicationController
     current_user.delay.get_invitations("outbound", linked_in_username, linked_in_password, count_record)
     current_user.delay.get_messages("inbound", linked_in_username, linked_in_password, count_record)
     current_user.delay.get_messages("outbound", linked_in_username, linked_in_password, count_record)
-
+    
+    respond_to do |format|
+      format.html { redirect_to new_comms_path, notice: 'Vault has been set. Update your data now!' }
+    end
+      
   end
 
   def synthesize_contacts

@@ -10,6 +10,8 @@ ImageLook::Application.routes.draw do
   get "pages/update_linked_in"
   get "pages/update_cell_data"
   get "pages/update_all"
+  get "pages/setup_connections"
+  get "pages/save_vault"
   get "pages/update_data"
   
   resources :touchpoints

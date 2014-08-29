@@ -14,6 +14,7 @@ gem 'mail'
 gem 'devise'
 gem 'acts-as-taggable-on'
 gem 'delayed_job_active_record'
+gem 'aescrypt', '~> 1.0.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

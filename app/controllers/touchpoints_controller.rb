@@ -2,7 +2,7 @@ class TouchpointsController < ApplicationController
   # GET /touchpoints
   # GET /touchpoints.json
   def index
-    @touchpoints = Touchpoint.all
+    @touchpoints = current_user.touchpoints.all
 
     respond_to do |format|
       format.html # index.html.erb
