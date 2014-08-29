@@ -415,7 +415,6 @@ class User < ActiveRecord::Base
           if newest < Date.parse(invitation.at('.date').at('.time-millis').text)
             puts 'line 416'
             if (invitation.at('.detail-link').text.to_s == "\nJoin my network on LinkedIn\n" || 
-              puts 'line 418'
                 invitation.at('.detail-link').text.to_s == "\nInvitation to connect on LinkedIn\n")
                   invite = user.linked_in_invitations.new
                   puts 'line 421'
