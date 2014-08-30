@@ -21,12 +21,11 @@
 	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 	  ga('create', 'UA-49492177-1', 'auto');
-	  ga('send', 'pageview');
-	  
 	  <% if user_signed_in? %>
 	  	ga('set', '&uid', '<%= current_user.id %>'); // Set the user ID using signed-in user_id.
 		<% end %>
-		
+	  ga('send', 'pageview');
+	  		
 	</script>
 
 </head>
