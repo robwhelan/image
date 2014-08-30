@@ -1,3 +1,5 @@
+require 'google_analytics_api'
+
 class PagesController < ApplicationController
 #  include GetCellData
 #  include GetLinkedIn
@@ -66,6 +68,8 @@ class PagesController < ApplicationController
       :handle_phone => phone,
       :handle_linked_in => linked_in)
     flash[:notice] = "#{contact.handle_linked_in} created!"
+    GoogleAnalyticsApi.new.pageview('/contact_synthesized', cookies[:clientId])
+    
       respond_to do |format|
         format.js
       end

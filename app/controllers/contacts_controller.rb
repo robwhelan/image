@@ -1,3 +1,4 @@
+require 'google_analytics_api'
 class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
@@ -95,6 +96,7 @@ class ContactsController < ApplicationController
     @contact.tag_list.add(params[:tags])
     @contact.save
     @tags = @contact.tag_list
+    GoogleAnalyticsApi.new.pageview('/tag_created', cookies[:clientId])
   end
 
 end
