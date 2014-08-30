@@ -1,4 +1,5 @@
 require 'google_analytics_api'
+
 class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
