@@ -31,7 +31,7 @@ class GoogleAnalyticsApi
       tid: GOOGLE_ANALYTICS_SETTINGS[:tracking_code],
       cid: client_id,
       t: "pageview",
-      dh: "www.womditty.com",
+      dh: "www.urbanrecon.co",
       dp: path,
     }
 
