@@ -1,7 +1,15 @@
 <h3>Tags</h3>
-	<%= form_tag( add_tags_contact_path(contact), remote: true, class: 'form-inline') do %>
-		<%= text_field_tag 'tags', nil, placeholder: 'Create a tag', class: 'form-control' %>
-		<%= submit_tag 'Add', class: 'btn btn-success' %>
+		<%= text_field_tag 'newTag', nil, placeholder: 'Create a tag', class: 'form-control' %>
+		<%= submit_tag 'Add', class: 'btn btn-success', id: 'formSubmit' %>
 		<%= hidden_field_tag 'contact', contact %>
-	<% end %>
 <hr class="hr"/>
+
+<script>
+$('#formSubmit').click(function(){
+	var tags = $('input#newTag').val();
+	var contact = $('#contact').val();
+	var params = '?tags=' + tags + '&contact=' + contact;
+	var url = '/pages/add_tags' + params;
+	$.get(url);
+});
+</script>

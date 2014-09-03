@@ -92,11 +92,4 @@ class ContactsController < ApplicationController
     @contact.update_attributes(:show_as_actionable => params[:make_actionable])
   end
   
-  def add_tags
-    @contact = Contact.find(params[:contact])
-    @contact.tag_list.add(params[:tags])
-    @contact.save
-    @tags = @contact.tag_list
-  end
-
 end

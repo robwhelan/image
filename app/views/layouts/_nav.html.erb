@@ -1,0 +1,60 @@
+		<!-- Note: This width of the aside area can be adjusted through LESS variables -->
+		<aside id="left-panel">
+
+			<!-- User info -->
+			<div class="login-info">
+				<span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
+					
+					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+						<img src="img/avatars/sunny.png" alt="me" class="online" /> 
+						<span>
+							<% if user_signed_in? %>
+							<%= current_user.email %>
+							<% end %>
+						</span>
+						<i class="fa fa-angle-down"></i>
+					</a> 
+					
+				</span>
+			</div>
+			<!-- end user info -->
+
+			<!-- NAVIGATION : This navigation is also responsive
+
+			To make this navigation dynamic please make sure to link the node
+			(the reference to the nav > ul) after page load. Or the navigation
+			will not initialize.
+			-->
+			<nav>
+				<!-- NOTE: Notice the gaps after each icon usage <i></i>..
+				Please note that these links work a bit different than
+				traditional href="" links. See documentation for details.
+				-->
+
+				<ul>
+					<li>
+						<a href="/pages/status" title="Dashboard"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Dashboard</span></a>
+					</li>
+					<li>
+						<a href="/contacts" title="My Contacts"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">My Contacts</span></a>
+					</li>
+					<li>
+						<a href="/pages/synthesize_contacts" title="Create Contacts"><i class="fa fa-lg fa-fw fa-magic"></i> <span class="menu-item-parent">Create Contacts</span></a>
+					</li>
+					<li>
+						<a href="/pages/setup_connections" title="Set Up External Sources"><i class="fa fa-lg fa-fw fa-bolt"></i> <span class="menu-item-parent">Set Up External Sources</span></a>
+					</li>
+					<li>
+						<a href="/new_comms" title="Data Status"><i class="fa fa-lg fa-fw fa-bell"></i> <span class="menu-item-parent">Data Status</span></a>
+					</li>
+					<li>
+						<a href="/#" title="Fetch Data"><i class="fa fa-lg fa-fw fa-rss"></i> <span class="menu-item-parent">Fetch Data</span></a>
+					</li>
+				</ul>
+			</nav>
+			<span class="minifyme" data-action="minifyMenu"> 
+				<i class="fa fa-arrow-circle-left hit"></i> 
+			</span>
+
+		</aside>
+		<!-- END NAVIGATION -->

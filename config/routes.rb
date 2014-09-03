@@ -13,6 +13,8 @@ ImageLook::Application.routes.draw do
   get "pages/setup_connections"
   get "pages/save_vault"
   get "pages/update_data"
+  get "pages/about"
+  get "pages/add_tags"
   
   resources :touchpoints
   devise_for :users
@@ -20,7 +22,6 @@ ImageLook::Application.routes.draw do
   resources :contacts do
     member do
       get :toggle_contact_as_actionable
-      post :add_tags
     end
   end
   resources :text_verizons

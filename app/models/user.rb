@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   has_many :contacts, dependent: :destroy
   has_many :new_comms, dependent: :destroy
 
+  acts_as_tagger
+
   def recent_touchpoints(limit)
     touchpoints.order('created_at DESC').limit(limit)
   end

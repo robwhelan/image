@@ -88,14 +88,22 @@ class PagesController < ApplicationController
     @contacts_outbound = []
     
     get_open_comms(@contacts, @contacts_inbound, @contacts_outbound)
-    @all_tags = ActsAsTaggableOn::Tag.all
+    @all_tags = current_user.owned_tags
   end
 
   def get_touchpoints
     @contact = Contact.find(params[:contact_id])
     @touchpoints = @contact.touchpoints.order(:touchpoint_date).reverse
-    @tags = @contact.tag_list
-    @all_tags = ActsAsTaggableOn::Tag.all
+    @tags = @contact.tags_from(current_user)
+    #    @tags = @contact.tag_list
+    #@all_tags = ActsAsTaggableOn::Tag.all
+  end
+  
+  def add_tags
+     @contact = Contact.find(params[:contact])
+     current_user.tag_list.add(@contact, :with => params[:tags], :on => :tags)
+#    @contact.save
+      @tags = @contact.tags_from(current_user) # => ["paris", "normandy"]  end    
   end
 
 private

@@ -14,6 +14,6 @@ $('#contactTagHeader').append(
 
 <% @tags.each do |tag| %>
 	$('#contactTagDetail').append(
-		"<%= j render partial: "/contacts/tags", :locals => { :tag => tag} %>"
+		"<%= j render partial: "/contacts/tags", :locals => { :tag => tag } %>"
 		);
 <% end %>
