@@ -1,5 +1,3 @@
-<div class="container">
-	<div class="row">
 		<div class="col-xs-3" id="contactList">
 			<input class="search form-control">
 			<ul class="list list-unstyled">
@@ -15,6 +13,7 @@
 		<div class="col-xs-6">
 			<ul class="list-unstyled" id="contactDetail">
 				<% if @contact_highlight %>
+					<%= render 'contacts/single_contact_graphs' %>
 					<h1><%= @contact_highlight.handle_linked_in %></h1>
 					<% @contact_highlight.touchpoints.order(:touchpoint_date).reverse.each do |t| %>
 							<%= render partial: "/touchpoints/partials/#{t.name}_#{t.direction}_current_user", :locals => { :subject => t.subject} %>
@@ -36,8 +35,6 @@
 				<% end %>
 			</div>
 		</div><!-- /div col -->
-	</div><!-- /row -->
-</div> <!-- container-->
 
 <script>
 $('.contactName').click(function(){

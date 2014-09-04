@@ -1,74 +1,72 @@
-				<!-- widget grid -->
-				<section id="widget-grid" class="">
+<article class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
-					<!-- row -->
-					<div class="row">
+	<!-- Widget ID (each widget will need unique ID)-->
+	<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-editbutton="false">
+		<!-- widget options:
+		usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-						<!-- NEW WIDGET START -->
-						<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		data-widget-colorbutton="false"
+		data-widget-editbutton="false"
+		data-widget-togglebutton="false"
+		data-widget-deletebutton="false"
+		data-widget-fullscreenbutton="false"
+		data-widget-custombutton="false"
+		data-widget-collapsed="true"
+		data-widget-sortable="false"
 
-							<!-- Widget ID (each widget will need unique ID)-->
-							<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-editbutton="false">
-								<!-- widget options:
-								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+		-->
+		<header>
+			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+			<h2>Normal Table</h2>
 
-								data-widget-colorbutton="false"
-								data-widget-editbutton="false"
-								data-widget-togglebutton="false"
-								data-widget-deletebutton="false"
-								data-widget-fullscreenbutton="false"
-								data-widget-custombutton="false"
-								data-widget-collapsed="true"
-								data-widget-sortable="false"
+		</header>
 
-								-->
-								<header>
-									<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-									<h2>Normal Table</h2>
+		<!-- widget div-->
+		<div>
 
-								</header>
+			<!-- widget edit box -->
+			<div class="jarviswidget-editbox">
+				<!-- This area used as dropdown edit box -->
 
-								<!-- widget div-->
-								<div>
+			</div>
+			<!-- end widget edit box -->
 
-									<!-- widget edit box -->
-									<div class="jarviswidget-editbox">
-										<!-- This area used as dropdown edit box -->
+			<!-- widget content -->
+			<div class="widget-body">
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>Tags</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<%= link_to pages_status_path do %>
+										All
+									<% end %>
+								</td>
+							</tr>
+						<% @all_tags.each do |tag| %>
+								<tr>
+									<td>
+										<%= link_to pages_status_path(:tag => tag.name) do %>
+										<%= tag.name %>
+										<% end %>
+									</td>
+								</tr>
+						<% end %>
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+			<!-- end widget content -->
 
-									</div>
-									<!-- end widget edit box -->
+		</div>
+		<!-- end widget div -->
 
-									<!-- widget content -->
-									<div class="widget-body">
-										<p>Adds borders to any table row within <code>&lt;table&gt;</code> by adding the <code>.table-bordered</code> with the base class</p>
-										
-										<div class="table-responsive">
-										
-											<table class="table table-bordered">
-												<thead>
-													<tr>
-														<th>Tags</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>Row 1</td>
-														<td>Row 2</td>
-														<td>Row 3</td>
-														<td>Row 4</td>
-													</tr>
-												</tbody>
-											</table>
-											
-										</div>
-									</div>
-									<!-- end widget content -->
-
-								</div>
-								<!-- end widget div -->
-
-							</div>
-							<!-- end widget -->
-						</article>
-					</div><!-- /row -->
-				</section><!-- /widget-grid -->
+	</div>
+	<!-- end widget -->
+</article>

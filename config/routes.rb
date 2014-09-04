@@ -15,6 +15,7 @@ ImageLook::Application.routes.draw do
   get "pages/update_data"
   get "pages/about"
   get "pages/add_tags"
+  get "pages/vault_password"
   
   resources :touchpoints
   devise_for :users

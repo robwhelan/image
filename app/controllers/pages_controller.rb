@@ -101,7 +101,7 @@ class PagesController < ApplicationController
   
   def add_tags
      @contact = Contact.find(params[:contact])
-     current_user.tag_list.add(@contact, :with => params[:tags], :on => :tags)
+     current_user.tag(@contact, :with => params[:tags], :on => :tags)
 #    @contact.save
       @tags = @contact.tags_from(current_user) # => ["paris", "normandy"]  end    
   end
