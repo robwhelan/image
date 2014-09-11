@@ -4,13 +4,13 @@ def get_calls(user, phone_primary, secret_question, password, phone_data)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
     agent.get "http://www.verizonwireless.com/"
-    puts 'got to home page'
-    puts agent.page.title
+#    puts 'got to home page'
+#    puts agent.page.title
     #form = agent.page.form_with :id => 'vgnSignInForm'
     agent.page.forms[0].IDToken1 = phone_primary
     agent.page.forms[0].submit
-    puts 'submitted phone number form'
-    puts agent.page.title
+#    puts 'submitted phone number form'
+#    puts agent.page.title
 
     if agent.page.title == "My Verizon"
       agent.page.form.submit
@@ -20,30 +20,30 @@ def get_calls(user, phone_primary, secret_question, password, phone_data)
       agent.page.form.IDToken1 = secret_question
       agent.page.form.submit
     end
-    puts 'submitted challenged question'
-    puts agent.page.title
+#    puts 'submitted challenged question'
+#    puts agent.page.title
 
     #password
     if agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
       agent.page.form.IDToken2 = password
       agent.page.form.submit
     end
-    puts 'submitted password'
-    puts agent.page.title
+#    puts 'submitted password'
+#    puts agent.page.title
     
     # this depends on the user being the 'Account Owner' in Verizon. Otherwise the session will not know how to click to select the person you want.
     agent.get ('https://wbillpay.verizonwireless.com/vzw/secure/services/myusageVoiceDetails.action')
-    puts 'got to voice data page'
-    puts agent.page.title
+#    puts 'got to voice data page'
+#    puts agent.page.title
     #select the proper account
     agent.page.form_with(:name => 'leftnavform').selMTN=phone_data
     agent.page.form_with(:name => 'leftnavform').submit
-    puts 'updated selected device'
-    puts agent.page.title
+#    puts 'updated selected device'
+#    puts agent.page.title
     
     agent.get ('https://wbillpay.verizonwireless.com/vzw/accountholder/unbilledusage/UnbilledVoiceViewAll.action')
-    puts 'got to voice view all page'
-    puts agent.page.title
+#    puts 'got to voice view all page'
+#    puts agent.page.title
     #now get all the data
     table = agent.page.search('td')
 
@@ -88,11 +88,11 @@ def get_texts(user, phone_primary, secret_question, password, phone_data)
     require 'mechanize'
     agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
     agent.get "http://www.verizonwireless.com/"
-    puts 'got to home page'
+#    puts 'got to home page'
     form = agent.page.form_with :id => 'vgnSignInForm'
     agent.page.forms[0].IDToken1 = phone_primary
     agent.page.forms[0].submit
-    puts 'submitted phone number form'
+#    puts 'submitted phone number form'
 
     if agent.page.title == "My Verizon"
       agent.page.form.submit
@@ -102,24 +102,24 @@ def get_texts(user, phone_primary, secret_question, password, phone_data)
       agent.page.form.IDToken1 = secret_question
       agent.page.form.submit
     end
-    puts 'submitted challenged question'
+#    puts 'submitted challenged question'
 
     if agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
       agent.page.form.IDToken2 = password
       agent.page.form.submit
     end
-    puts 'submitted password'
+#    puts 'submitted password'
     
     # this depends on the user being the 'Account Owner' in Verizon. Otherwise the session will not know how to click to select the person you want.
     agent.get ('https://wbillpay.verizonwireless.com/vzw/secure/services/myusageMsgDetails.action')
-    puts 'got to text data page'
+#    puts 'got to text data page'
     #select the proper account
     agent.page.form_with(:name => 'leftnavform').selMTN=phone_data
     agent.page.form_with(:name => 'leftnavform').submit
-    puts 'updated selected device'
+#    puts 'updated selected device'
     
     agent.get ('https://wbillpay.verizonwireless.com/vzw/accountholder/unbilledusage/UnbilledMessagingViewAll.action')
-    puts 'got to text view all page'
+#    puts 'got to text view all page'
     #now get all the data
     table = agent.page.search('td')
 

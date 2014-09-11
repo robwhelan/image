@@ -137,104 +137,104 @@ class User < ActiveRecord::Base
       require 'mechanize'
       agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
       agent.get "http://www.verizonwireless.com/"
-      puts 'got to home page:'
-      puts agent.page.title
+#      puts 'got to home page:'
+#      puts agent.page.title
 
       if agent.page.title == "My Verizon Secret Question"
-        puts 'case 1'
-        puts agent.page.forms[0].action.to_s
-        puts agent.page.forms[0].fields.to_s
+#        puts 'case 1'
+#        puts agent.page.forms[0].action.to_s
+#        puts agent.page.forms[0].fields.to_s
         agent.page.form.IDToken1 = secret_question
-        puts agent.page.title
-        puts 'My verizon secret question: submitting challenge question'
+#        puts agent.page.title
+#        puts 'My verizon secret question: submitting challenge question'
         agent.page.form.submit
-        puts 'submitted challenged question, now on page:'
-        puts agent.page.title
+#        puts 'submitted challenged question, now on page:'
+#        puts agent.page.title
       elsif agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
-        puts 'case 1a'
-        puts agent.page.forms[0].action.to_s
-        puts agent.page.forms[0].fields.to_s
+#        puts 'case 1a'
+#        puts agent.page.forms[0].action.to_s
+#        puts agent.page.forms[0].fields.to_s
         agent.page.forms[0].IDToken2 = password
-        puts 'about to submit password'
+#        puts 'about to submit password'
         agent.page.forms[0].submit
-        puts 'submitted password, now on page:'
-        puts agent.page.title
+#        puts 'submitted password, now on page:'
+#        puts agent.page.title
       else
-        puts 'case 2'
-        puts "not on secret question, actually on:"
-        puts agent.page.title
-        puts agent.page.forms[0].action.to_s
-        puts agent.page.forms[0].fields.to_s
+#        puts 'case 2'
+#        puts "not on secret question, actually on:"
+#        puts agent.page.title
+#        puts agent.page.forms[0].action.to_s
+#        puts agent.page.forms[0].fields.to_s
         agent.page.forms[0].IDToken1 = phone_primary
         agent.page.forms[0].submit
-        puts 'submitted phone number form and it took me to:'
-        puts agent.page.title
+#        puts 'submitted phone number form and it took me to:'
+#        puts agent.page.title
       end
       #form = agent.page.form_with :id => 'vgnSignInForm'
 
       if agent.page.title == "My Verizon"
-        puts 'case 3'
-        puts agent.page.title
-        puts "My Verizon: random page title for already-logged-in"
-        puts agent.page.forms[0].action.to_s
-        puts agent.page.forms[0].fields.to_s
+#        puts 'case 3'
+#        puts agent.page.title
+#        puts "My Verizon: random page title for already-logged-in"
+#        puts agent.page.forms[0].action.to_s
+#        puts agent.page.forms[0].fields.to_s
         agent.page.form.submit
-        puts "submitted form, now on:"
-        puts agent.page.title
+#        puts "submitted form, now on:"
+#        puts agent.page.title
       end
 
       if agent.page.title == "My Verizon Secret Question"
-        puts 'case 4'
+#        puts 'case 4'
         agent.page.form.IDToken1 = secret_question
-        puts agent.page.forms[0].action.to_s
-        puts agent.page.forms[0].fields.to_s
+#        puts agent.page.forms[0].action.to_s
+#        puts agent.page.forms[0].fields.to_s
         agent.page.form.submit
-        puts 'submitted challenged question later on'
-        puts agent.page.title
+#        puts 'submitted challenged question later on'
+#        puts agent.page.title
       end
 
       #password
       if agent.page.title == "My Verizon Online Sign In - Verizon Wireless"
-        puts 'case 5'
-        puts agent.page.forms[0].action.to_s
-        puts agent.page.forms[0].fields.to_s
-        puts "entering password into IDToken2"
+#        puts 'case 5'
+#        puts agent.page.forms[0].action.to_s
+#        puts agent.page.forms[0].fields.to_s
+#        puts "entering password into IDToken2"
         agent.page.forms[0].IDToken2 = password
-        puts agent.page.forms[0].fields.to_s
-        puts 'about to submit form'
+#        puts agent.page.forms[0].fields.to_s
+#        puts 'about to submit form'
         agent.page.forms[0].submit
-        puts 'submitted password, now on page:'
-        puts agent.page.title
-        puts agent.page.forms.count
-        puts agent.page.forms[0].action.to_s
-        puts agent.page.forms[0].fields.to_s
+#        puts 'submitted password, now on page:'
+#        puts agent.page.title
+#        puts agent.page.forms.count
+#        puts agent.page.forms[0].action.to_s
+#        puts agent.page.forms[0].fields.to_s
       end
       
       if agent.page.title == "Verizon Wireless - We Never Stop Working For You" #account is locked
-        puts 'case 6'
-        puts agent.page.forms[0].action.to_s
-        puts agent.page.forms[0].fields.to_s
+#        puts 'case 6'
+#        puts agent.page.forms[0].action.to_s
+#        puts agent.page.forms[0].fields.to_s
         agent.page.forms[0].mobileNumber = phone_primary
         agent.page.forms[0].submit
-        puts agent.page.title
-        puts agent.page.forms[0].action.to_s
-        puts agent.page.forms[0].fields.to_s
+#        puts agent.page.title
+#        puts agent.page.forms[0].action.to_s
+#        puts agent.page.forms[0].fields.to_s
       end
       
       # this depends on the user being the 'Account Owner' in Verizon. Otherwise the session will not know how to click to select the person you want.
       
       agent.get ('https://wbillpay.verizonwireless.com/vzw/secure/services/myusageVoiceDetails.action')
-      puts 'got to voice data page'
-      puts agent.page.title
+#      puts 'got to voice data page'
+#      puts agent.page.title
       #select the proper account
       agent.page.form_with(:name => 'leftnavform').selMTN=phone_data
       agent.page.form_with(:name => 'leftnavform').submit
-      puts 'updated selected device'
-      puts agent.page.title
+#      puts 'updated selected device'
+#      puts agent.page.title
     
       agent.get ('https://wbillpay.verizonwireless.com/vzw/accountholder/unbilledusage/UnbilledVoiceViewAll.action')
-      puts 'got to voice view all page'
-      puts agent.page.title
+#      puts 'got to voice view all page'
+#      puts agent.page.title
       #now get all the data
       table = agent.page.search('td')
 
