@@ -1,5 +1,5 @@
 $('#contactDetail,#contactTagDetail,#contactTagHeader').html("");
-$('#contactDetail').append("<h1><%= @contact.handle_linked_in %></h1><p><%= j link_to "Edit", edit_contact_path(@contact) %>");
+$('#contactDetail').append("<h1 id='contactName'><%= @contact.handle_linked_in %></h1><p id='contactEdit'><%= j link_to "Edit", edit_contact_path(@contact) %>");
 <% @touchpoints.each do |t| %>
 	$('#contactDetail').append(
 		"<li>" +
@@ -16,4 +16,9 @@ $('#contactTagHeader').append(
 	$('#contactTagDetail').append(
 		"<%= j render partial: "/contacts/tags", :locals => { :tag => tag } %>"
 		);
+
+$('#contactCommentDetail').append(
+	"<%= j render partial: "/contacts/comment_form", :locals => { :contact => @contact.id } %>"
+	);
+
 <% end %>

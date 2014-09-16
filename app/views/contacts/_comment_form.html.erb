@@ -1,0 +1,15 @@
+<h3>Comments</h3>
+		<%= text_field_tag 'newComment', nil, placeholder: 'Add a comment', class: 'form-control' %>
+		<%= submit_tag 'Add', class: 'btn btn-success', id: 'commentSubmit' %>
+		<%= hidden_field_tag 'contact', contact %>
+<hr class="hr"/>
+
+<script>
+$('#commentSubmit').click(function(){
+	var comment = $('input#newComment').val();
+	var contact = $('#contact').val();
+	var params = '?comment=' + comment + '&contact=' + contact;
+	var url = '/pages/add_comment' + params;
+	$.get(url);
+});
+</script>

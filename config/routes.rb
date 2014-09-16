@@ -1,5 +1,8 @@
 ImageLook::Application.routes.draw do
 
+  resources :comments
+
+
   root :to => "pages#status"
   get "pages/synthesize_contacts"
   get "products/show_products"
@@ -16,6 +19,7 @@ ImageLook::Application.routes.draw do
   get "pages/about"
   get "pages/add_tags"
   get "pages/vault_password"
+  get "pages/add_comment"
   
   resources :touchpoints
   devise_for :users

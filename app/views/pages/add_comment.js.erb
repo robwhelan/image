@@ -1,0 +1,7 @@
+$('input#newComment').val("");
+$('#contactEdit').append(
+	"<li>" +
+	"<%= j render partial: "/touchpoints/partials/comment_about_current_user", :locals => { :subject => @comment} %>" +
+	"</li>"
+	);
+ga('send', 'pageview', '/comment_created');

@@ -63,11 +63,11 @@ class PagesController < ApplicationController
     email = params[:email]
     phone = params[:phone]
     linked_in = params[:linked_in]
-    contact = current_user.contacts.create(
+    @contact = current_user.contacts.create(
       :handle_email => email,
       :handle_phone => phone,
       :handle_linked_in => linked_in)
-    flash[:notice] = "#{contact.handle_linked_in} created!"
+    #flash[:notice] = "#{contact.handle_linked_in} created!"
     
       respond_to do |format|
         format.js
@@ -100,10 +100,16 @@ class PagesController < ApplicationController
   end
   
   def add_tags
-     @contact = Contact.find(params[:contact])
-     current_user.tag(@contact, :with => params[:tags], :on => :tags)
-#    @contact.save
-      @tags = @contact.tags_from(current_user) # => ["paris", "normandy"]  end    
+    @contact = Contact.find(params[:contact])
+    current_user.tag(@contact, :with => params[:tags], :on => :tags)
+    #    @contact.save
+    @tags = @contact.tags_from(current_user) # => ["paris", "normandy"]  end    
+  end
+  
+  def add_comment
+    @contact = Contact.find(params[:contact])
+    body = params[:comment]
+    @comment = Comment.create(:user_id => current_user.id, :contact_id => @contact.id, :body => body)
   end
 
 private

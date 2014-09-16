@@ -14,9 +14,12 @@
 			<ul class="list-unstyled" id="contactDetail">
 				<% if @contact_highlight %>
 					<%= render 'contacts/single_contact_graphs' %>
-					<h1><%= @contact_highlight.handle_linked_in %></h1>
+					<h1 id="contactName"><%= @contact_highlight.handle_linked_in %></h1>
+					<p id='contactEdit'><%= link_to "Edit", edit_contact_path(@contact_highlight) %></p>
 					<% @contact_highlight.touchpoints.order(:touchpoint_date).reverse.each do |t| %>
+						<li>
 							<%= render partial: "/touchpoints/partials/#{t.name}_#{t.direction}_current_user", :locals => { :subject => t.subject} %>
+						</li>
 					<% end %>
 				<% end %>
 			</ul>
@@ -32,6 +35,11 @@
 					<% @contact_highlight.tags.each do |tag| %>
 						<%= render 'contacts/tags', :tag => tag.name %>
 					<% end %>
+				<% end %>
+			</div>
+			<div id="contactCommentDetail">
+				<% if @contact_highlight %>
+					<%= render 'contacts/comment_form', :contact => @contact_highlight.id %>
 				<% end %>
 			</div>
 		</div><!-- /div col -->
