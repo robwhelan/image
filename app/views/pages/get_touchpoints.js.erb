@@ -1,4 +1,4 @@
-$('#contactDetail,#contactTagDetail,#contactTagHeader').html("");
+$('#contactDetail,#contactTagDetail,#contactTagHeader,#contactCommentDetail').html("");
 $('#contactDetail').append("<h1 id='contactName'><%= @contact.handle_linked_in %></h1><p id='contactEdit'><%= j link_to "Edit", edit_contact_path(@contact) %>");
 <% @touchpoints.each do |t| %>
 	$('#contactDetail').append(
