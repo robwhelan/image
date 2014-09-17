@@ -42,10 +42,6 @@ class Contact < ActiveRecord::Base
     end
   end
 
-  def create_touchpoints
-    #go through all the data models to create touchpoints from them
-  end
-  
   def most_recent_touchpoint
     self.touchpoints.order(:touchpoint_date).last
   end

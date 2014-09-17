@@ -1,5 +1,5 @@
 class TextVerizon < ActiveRecord::Base
-  attr_accessible :text_contact_number, :text_date, :text_direction, :unassigned_contact, :contact_id, :user_id
+  attr_accessible :text_contact_number, :text_date, :text_direction, :unassigned_contact, :contact_id, :user_id, :batch_id
   belongs_to :contact
   belongs_to :user
   

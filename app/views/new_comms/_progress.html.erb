@@ -1,5 +1,7 @@
 <% if data.nil? %>
 	<%= image_tag "spinning.gif" %>
 <% else %>
-	<%= data %>
+	<%= link_to path do %>
+		<%= data %>
+	<% end %>
 <% end %>

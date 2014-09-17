@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140916091128) do
+ActiveRecord::Schema.define(:version => 20140917100250) do
 
   create_table "call_verizons", :force => true do |t|
     t.datetime "call_date"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20140916091128) do
     t.integer  "user_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "batch_id"
   end
 
   add_index "call_verizons", ["contact_id"], :name => "index_call_verizons_on_contact_id"
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20140916091128) do
     t.integer  "user_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "batch_id"
   end
 
   add_index "email_gmails", ["contact_id"], :name => "index_email_gmails_on_contact_id"
@@ -98,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20140916091128) do
     t.integer  "user_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "batch_id"
   end
 
   add_index "linked_in_invitations", ["contact_id"], :name => "index_linked_in_invitations_on_contact_id"
@@ -113,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20140916091128) do
     t.integer  "user_id"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.integer  "batch_id"
   end
 
   add_index "linked_in_messages", ["contact_id"], :name => "index_linked_in_messages_on_contact_id"
@@ -164,6 +168,7 @@ ActiveRecord::Schema.define(:version => 20140916091128) do
     t.integer  "user_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.integer  "batch_id"
   end
 
   add_index "text_verizons", ["contact_id"], :name => "index_text_verizons_on_contact_id"

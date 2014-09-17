@@ -1,5 +1,5 @@
 class CallVerizon < ActiveRecord::Base
-  attr_accessible :call_date, :call_direction, :call_duration, :contact_number, :unassigned_contact, :contact_id, :user_id
+  attr_accessible :call_date, :call_direction, :call_duration, :contact_number, :unassigned_contact, :contact_id, :user_id, :batch_id
   belongs_to :contact
   belongs_to :user
 

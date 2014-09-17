@@ -1,5 +1,5 @@
 class EmailGmail < ActiveRecord::Base
-  attr_accessible :contact_email, :contact_name, :date_sent, :direction, :message_id, :subject, :unassigned_contact, :contact_id, :user_id
+  attr_accessible :contact_email, :contact_name, :date_sent, :direction, :message_id, :subject, :unassigned_contact, :contact_id, :user_id, :batch_id
   belongs_to :contact
   belongs_to :user
   

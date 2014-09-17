@@ -1,5 +1,5 @@
 class LinkedInMessage < ActiveRecord::Base
-  attr_accessible :date_sent, :initiator, :is_a_reply_to_outbound, :message_id, :name, :unassigned_contact, :contact_id, :user_id
+  attr_accessible :date_sent, :initiator, :is_a_reply_to_outbound, :message_id, :name, :unassigned_contact, :contact_id, :user_id, :batch_id
   belongs_to :contact
   belongs_to :user
   

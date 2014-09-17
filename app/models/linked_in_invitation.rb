@@ -1,5 +1,5 @@
 class LinkedInInvitation < ActiveRecord::Base
-  attr_accessible :accepted, :date_sent, :initiator, :invitation_id, :name, :unassigned_contact, :contact_id, :user_id
+  attr_accessible :accepted, :date_sent, :initiator, :invitation_id, :name, :unassigned_contact, :contact_id, :user_id, :batch_id
   belongs_to :contact
   belongs_to :user
   

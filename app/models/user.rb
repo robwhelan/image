@@ -84,6 +84,7 @@ class User < ActiveRecord::Base
           end
           e.direction = msg_direction
           e.message_id = msg.message.message_id
+          e.batch_id = @new_comms.id
           e.save
           counter = counter+1
         else
@@ -122,6 +123,7 @@ class User < ActiveRecord::Base
           e.direction = msg_direction
           e.message_id = msg.message.message_id
           e.save
+          e.batch_id = @new_comms.id
           counter = counter+1
         else
           puts "already downloaded"
@@ -273,6 +275,7 @@ class User < ActiveRecord::Base
             c.contact_number = table[i+3].children[1].attributes["title"].value
             c.call_duration = table[i+5].children[0].text
             c.call_date = call_date
+            c.batch_id = @new_comms.id
             c.save
           end #if newer data
         rescue NoMethodError
@@ -365,6 +368,7 @@ class User < ActiveRecord::Base
             end
             t.text_direction = table[i+4].children[0].text
             t.text_date = text_date
+            t.batch_id = @new_comms.id
             t.save
           end # newest < text date
         rescue NoMethodError
@@ -413,15 +417,11 @@ class User < ActiveRecord::Base
 
       for i in 0..num_pages
         agent.page.search('.item-content').each do |invitation|
-          puts 'line 414'
           if newest < DateTime.parse(invitation.at('.date').at('.time-millis').text)
-            puts 'line 416'
             if (invitation.at('.detail-link').text.to_s == "\nJoin my network on LinkedIn\n" || 
                 invitation.at('.detail-link').text.to_s == "\nInvitation to connect on LinkedIn\n")
                   invite = user.linked_in_invitations.new
-                  puts 'line 421'
                     invite.name = invitation.at('.participants').children.last.text.strip
-                    puts 'line 423'
                     invite.date_sent = invitation.at('.date').at('.time-millis').text
                     invite.initiator = initiator
 
@@ -438,7 +438,7 @@ class User < ActiveRecord::Base
                       end #decided whether invite was accepted
                     end #decide if invite has a status
 
-                  #invite.invitation_id = invitation.children[1].attributes["value"].value
+                    invite.batch_id = @new_comms.id
                   invite.save              
             else
               puts "not an invitation"
@@ -521,7 +521,8 @@ class User < ActiveRecord::Base
                   msg.is_a_reply_to_outbound = false
                 end #replied
               end #item status nil
-              #msg.message_id = message.children[1].attributes["value"].value
+
+              msg.batch_id = @new_comms.id
               msg.save
             end # msg is an invitation
           else

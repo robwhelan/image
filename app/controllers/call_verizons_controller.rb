@@ -2,7 +2,7 @@ class CallVerizonsController < ApplicationController
   # GET /call_verizons
   # GET /call_verizons.json
   def index
-    @call_verizons = CallVerizon.all
+    @call_verizons = current_user.call_verizons.where(:batch_id => params[:batch])
 
     respond_to do |format|
       format.html # index.html.erb
