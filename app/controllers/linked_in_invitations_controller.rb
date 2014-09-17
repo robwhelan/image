@@ -2,7 +2,7 @@ class LinkedInInvitationsController < ApplicationController
   # GET /linked_in_invitations
   # GET /linked_in_invitations.json
   def index
-    @linked_in_invitations = current_user.linked_in_inviations.where(:batch_id => params[:batch])
+    @linked_in_invitations = current_user.linked_in_inviations.where(:batch_id => params[:batch_id])
 
     respond_to do |format|
       format.html # index.html.erb
