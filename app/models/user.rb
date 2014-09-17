@@ -414,7 +414,7 @@ class User < ActiveRecord::Base
       for i in 0..num_pages
         agent.page.search('.item-content').each do |invitation|
           puts 'line 414'
-          if newest < Date.parse(invitation.at('.date').at('.time-millis').text)
+          if newest < DateTime.parse(invitation.at('.date').at('.time-millis').text)
             puts 'line 416'
             if (invitation.at('.detail-link').text.to_s == "\nJoin my network on LinkedIn\n" || 
                 invitation.at('.detail-link').text.to_s == "\nInvitation to connect on LinkedIn\n")
@@ -500,7 +500,7 @@ class User < ActiveRecord::Base
       for i in 0..num_pages
       #block
         agent.page.search('.item-content').each do |message|
-          if newest < Date.parse(message.at('.date').at('.time-millis').text)
+          if newest < DateTime.parse(message.at('.date').at('.time-millis').text)
             if (message.at('.detail-link').text.to_s == "\nJoin my network on LinkedIn\n" || 
                 message.at('.detail-link').text.to_s == "\nInvitation to connect on LinkedIn\n")
                 puts "this is an invite"
