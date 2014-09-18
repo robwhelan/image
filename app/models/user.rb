@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
       counter = 0
       messages.last(100).each do |msg|
         if newest < msg.date
-          e = user.email_gmails.new
+          e = user.email_gmails.new(:batch_id => count_record)
           e.date_sent = msg.date
           e.subject = msg.subject
           e.contact_email = msg.smtp_envelope_to[0] #gets recipient email
@@ -84,7 +84,6 @@ class User < ActiveRecord::Base
           end
           e.direction = msg_direction
           e.message_id = msg.message.message_id
-          e.batch_id = @new_comms.id
           e.save
           counter = counter+1
         else
@@ -97,7 +96,7 @@ class User < ActiveRecord::Base
       counter = 0
       messages.last(100).each do |msg|
         if newest < msg.date
-          e = user.email_gmails.new
+          e = user.email_gmails.new(:batch_id => count_record)
           e.date_sent = msg.date
           e.subject = msg.subject
           e.contact_email = msg.smtp_envelope_from #gets recipient email
@@ -123,7 +122,6 @@ class User < ActiveRecord::Base
           e.direction = msg_direction
           e.message_id = msg.message.message_id
           e.save
-          e.batch_id = @new_comms.id
           counter = counter+1
         else
           puts "already downloaded"
@@ -263,7 +261,7 @@ class User < ActiveRecord::Base
           call_date = DateTime.parse(date_string)
 
           if newest < call_date #maybe the formats are different
-            c = user.call_verizons.new
+            c = user.call_verizons.new(:batch_id => count_record)
 
             if table[i+2].children[0].text == "INCOMING"
               c.call_direction = "inbound"
@@ -275,7 +273,6 @@ class User < ActiveRecord::Base
             c.contact_number = table[i+3].children[1].attributes["title"].value
             c.call_duration = table[i+5].children[0].text
             c.call_date = call_date
-            c.batch_id = @new_comms.id
             c.save
           end #if newer data
         rescue NoMethodError
@@ -358,7 +355,7 @@ class User < ActiveRecord::Base
           text_date = DateTime.parse(date_string)
 
           if newest < text_date
-            t = user.text_verizons.new
+            t = user.text_verizons.new(:batch_id => count_record)
             if table[i+4].children[0].text == "Received"
               t.text_contact_number = table[i+3].children[1].attributes["title"].value
               counter_in = counter_in + 1
@@ -368,7 +365,6 @@ class User < ActiveRecord::Base
             end
             t.text_direction = table[i+4].children[0].text
             t.text_date = text_date
-            t.batch_id = @new_comms.id
             t.save
           end # newest < text date
         rescue NoMethodError
@@ -420,7 +416,7 @@ class User < ActiveRecord::Base
           if newest < DateTime.parse(invitation.at('.date').at('.time-millis').text)
             if (invitation.at('.detail-link').text.to_s == "\nJoin my network on LinkedIn\n" || 
                 invitation.at('.detail-link').text.to_s == "\nInvitation to connect on LinkedIn\n")
-                  invite = user.linked_in_invitations.new
+                  invite = user.linked_in_invitations.new(:batch_id => count_record)
                     invite.name = invitation.at('.participants').children.last.text.strip
                     invite.date_sent = invitation.at('.date').at('.time-millis').text
                     invite.initiator = initiator
@@ -438,7 +434,6 @@ class User < ActiveRecord::Base
                       end #decided whether invite was accepted
                     end #decide if invite has a status
 
-                    invite.batch_id = @new_comms.id
                   invite.save              
             else
               puts "not an invitation"
@@ -505,7 +500,7 @@ class User < ActiveRecord::Base
                 message.at('.detail-link').text.to_s == "\nInvitation to connect on LinkedIn\n")
                 puts "this is an invite"
             else
-              msg = user.linked_in_messages.new
+              msg = user.linked_in_messages.new(:batch_id => count_record)
               msg.name = message.at('.participants').children.last.text.strip
               msg.date_sent = message.at('.date').at('.time-millis').text
               msg.initiator = initiator
@@ -522,7 +517,6 @@ class User < ActiveRecord::Base
                 end #replied
               end #item status nil
 
-              msg.batch_id = @new_comms.id
               msg.save
             end # msg is an invitation
           else
