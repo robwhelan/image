@@ -19,16 +19,26 @@
 <% @new_comms.each do |new_comm| %>
   <tr>
     <td><%= new_comm.created_at %></td>
-    <td><%= render '/new_comms/progress', :path => email_gmails_path(:batch_id => new_comm.id), :data => new_comm.email_in %></td>
-    <td><%= render '/new_comms/progress', :path => email_gmails_path(:batch_id => new_comm.id), :data => new_comm.email_out %></td>
-    <td><%= render '/new_comms/progress', :path => text_verizons_path(:batch_id => new_comm.id), :data => new_comm.text_in %></td>
-    <td><%= render '/new_comms/progress', :path => text_verizons_path(:batch_id => new_comm.id), :data => new_comm.text_out %></td>
-    <td><%= render '/new_comms/progress', :path => call_verizons_path(:batch_id => new_comm.id), :data => new_comm.call_in %></td>
-    <td><%= render '/new_comms/progress', :path => call_verizons_path(:batch_id => new_comm.id), :data => new_comm.call_out %></td>
-    <td><%= render '/new_comms/progress', :path => linked_in_invitations_path(:batch_id => new_comm.id), :data => new_comm.li_invite_in %></td>
-    <td><%= render '/new_comms/progress', :path => linked_in_invitations_path(:batch_id => new_comm.id), :data => new_comm.li_invite_out %></td>
-    <td><%= render '/new_comms/progress', :path => linked_in_messages_path(:batch_id => new_comm.id), :data => new_comm.li_message_in %></td>
-    <td><%= render '/new_comms/progress', :path => linked_in_messages_path(:batch_id => new_comm.id), :data => new_comm.li_message_out %></td>
+    <td><%= render '/new_comms/progress', :path => email_gmails_path(:batch_id => new_comm.id, 
+													:direction => "inbound"), :data => new_comm.email_in %></td>
+    <td><%= render '/new_comms/progress', :path => email_gmails_path(:batch_id => new_comm.id, 
+													:direction => "outbound"), :data => new_comm.email_out %></td>
+    <td><%= render '/new_comms/progress', :path => text_verizons_path(:batch_id => new_comm.id, 
+													:text_direction => "Received"), :data => new_comm.text_in %></td>
+    <td><%= render '/new_comms/progress', :path => text_verizons_path(:batch_id => new_comm.id, 
+													:text_direction => "Sent"), :data => new_comm.text_out %></td>
+    <td><%= render '/new_comms/progress', :path => call_verizons_path(:batch_id => new_comm.id, 
+													:call_direction => "inbound"), :data => new_comm.call_in %></td>
+    <td><%= render '/new_comms/progress', :path => call_verizons_path(:batch_id => new_comm.id, 
+													:call_direction => "outbound"), :data => new_comm.call_out %></td>
+    <td><%= render '/new_comms/progress', :path => linked_in_invitations_path(:batch_id => new_comm.id,
+													:initiator => "inbound"), :data => new_comm.li_invite_in %></td>
+    <td><%= render '/new_comms/progress', :path => linked_in_invitations_path(:batch_id => new_comm.id,
+													:initiator => "outbound"), :data => new_comm.li_invite_out %></td>
+    <td><%= render '/new_comms/progress', :path => linked_in_messages_path(:batch_id => new_comm.id,
+													:initiator => "inbound"), :data => new_comm.li_message_in %></td>
+    <td><%= render '/new_comms/progress', :path => linked_in_messages_path(:batch_id => new_comm.id,
+													:initiator => "outbound"), :data => new_comm.li_message_out %></td>
     <td><%= link_to 'Show', new_comm %></td>
     <td><%= link_to 'Edit', edit_new_comm_path(new_comm) %></td>
     <td><%= link_to 'Destroy', new_comm, method: :delete, data: { confirm: 'Are you sure?' } %></td>

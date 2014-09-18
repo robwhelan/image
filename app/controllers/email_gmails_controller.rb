@@ -2,7 +2,7 @@ class EmailGmailsController < ApplicationController
   # GET /email_gmails
   # GET /email_gmails.json
   def index
-    @email_gmails = current_user.email_gmails.where(:batch_id => params[:batch_id])
+    @email_gmails = current_user.email_gmails.where(:batch_id => params[:batch_id], :direction => params[:direction])
 
     respond_to do |format|
       format.html # index.html.erb

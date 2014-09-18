@@ -2,7 +2,7 @@ class LinkedInMessagesController < ApplicationController
   # GET /linked_in_messages
   # GET /linked_in_messages.json
   def index
-    @linked_in_messages = current_user.linked_in_messages.where(:batch_id => params[:batch_id])
+    @linked_in_messages = current_user.linked_in_messages.where(:batch_id => params[:batch_id], :initiator => params[:initiator])
 
     respond_to do |format|
       format.html # index.html.erb
