@@ -9,13 +9,13 @@ class LinkedInMessage < ActiveRecord::Base
   private
   
   def assign_contact
-    contact = Contact.find_by_handle_linked_in(self.name)
-    if contact
-      self.update_attributes(:contact_id => contact.id)
-      create_touchpoint
-    else
-      puts "contact doesn't exist yet"
+    user = self.user
+    contact = user.contacts.find_by_fullname(self.name)
+    if contact.nil?
+      contact = user.contacts.create(:fullname => self.name)
+      puts "created a new contact from linked in message"
     end
+    self.update_attributes(:contact_id => contact.id)
   end
 
   def create_touchpoint

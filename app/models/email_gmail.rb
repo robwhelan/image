@@ -5,16 +5,22 @@ class EmailGmail < ActiveRecord::Base
   
   after_create :assign_contact
   after_update :create_touchpoint
-  private
+  #private
   
   def assign_contact
-    contact = Contact.find_by_handle_email(self.contact_email)
-    if contact
-      self.update_attributes(:contact_id => contact.id)
-      #create_touchpoint
-    else
-      puts "contact doesn't exist yet"
+    user = self.user
+    begin
+      contact = Email.find_by_email(self.contact_email).contact
+    rescue
+      contact = user.contacts.find_by_fullname(self.contact_name)
+      unless contact
+        contact = user.contacts.create(:fullname => self.contact_name)
+        puts "created new contact from email"
+      end
+      contact.emails.create(:email => self.contact_email) #add the email to the Contact's list of emails
     end
+    
+    self.update_attributes(:contact_id => contact.id)
   end
 
   def create_touchpoint

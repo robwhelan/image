@@ -1,0 +1,50 @@
+BEGIN:VCARD
+VERSION:3.0
+PRODID:-//Apple Inc.//Mac OS X 10.10//EN
+N:Nieboer;Curtis;;;
+FN:Curtis Nieboer
+EMAIL;type=INTERNET;type=pref:cbnieboer@hotmail.com
+UID:12d
+X-ABUID:DF47B371-62C1-40B3-AC03-FADDF8B1F4E4:ABPerson
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+PRODID:-//Apple Inc.//Mac OS X 10.10//EN
+N:Niedbalski;Scott;;;
+FN:Scott Niedbalski
+EMAIL;type=INTERNET;type=pref:saniedbalski@yahoo.com
+UID:9d
+X-ABUID:62EE4D47-DB3E-43AE-BE86-DA409BBEECBE:ABPerson
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+PRODID:-//Apple Inc.//Mac OS X 10.10//EN
+N:Nissenboim;Josh;;;
+FN:Josh Nissenboim
+ORG:Fuzzco;
+EMAIL;type=INTERNET;type=pref:josh@fuzzco.com
+TEL;type=WORK;type=VOICE;type=pref:(843) 723-1665
+UID:10D94640-CDEA-4E4A-8FCD-C96CCE98E2B4
+X-ABUID:91CCC94A-E543-4990-A277-0B9849A3D2BA:ABPerson
+X-APPLE-OL-MAPPING-INFO:1
+X-APPLE-OL-EMAIL1-LABEL;EMAIL=josh@fuzzco.com:Josh Nissenboim
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+PRODID:-//Apple Inc.//Mac OS X 10.10//EN
+N:Nitta;Yasuo;;;
+FN:Yasuo Nitta
+EMAIL;type=INTERNET;type=pref:nitta_y@shimz.co.jp
+UID:53fe0ac5898efe89
+X-ABUID:EAE80E05-885C-49D8-A903-5984173D1F05:ABPerson
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+PRODID:-//Apple Inc.//Mac OS X 10.10//EN
+N:;Noah and Helen;;;
+FN:Noah and Helen
+ORG:Keller Williams Realty;
+EMAIL;type=INTERNET;type=pref:noahandhelen@gmail.com
+UID:1f2
+X-ABUID:E1A9FF66-4B85-4165-98E7-4C7B847B2808:ABPerson
+END:VCARD

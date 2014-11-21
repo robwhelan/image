@@ -8,16 +8,15 @@ class CallVerizon < ActiveRecord::Base
   after_create :assign_contact
   after_update :create_touchpoint
 
-  private
-  
   def assign_contact
-    contact = Contact.find_by_handle_phone(self.contact_number)
-    if contact
-      self.update_attributes(:contact_id => contact.id)
-      create_touchpoint
-    else
-      puts "contact doesn't exist yet"
-    end
+    user = self.user
+    begin
+      contact = Phone.find_by_phone(self.contact_number).contact
+    rescue
+      contact = user.contacts.create
+      contact.phones.create(:phone => self.contact_number)
+    end    
+    self.update_attributes(:contact_id => contact.id)
   end
   
   def create_touchpoint

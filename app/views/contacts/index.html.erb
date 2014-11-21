@@ -4,8 +4,13 @@
 				<% @contacts.each do |contact| %>
 					<li>
 						<a class="contactName" data-contactId="<%= contact.id %>">
-							<h3 class="contactName"><%= contact.handle_linked_in %></h3>
-						</a>
+							<h3 class="contactName"><%= contact.fullname %></h3></a>
+							<% contact.emails.each do |e| %>
+								<p><%= e.email %></p>
+								<% end %>
+							<% contact.phones.each do |p| %>
+								<p><%= p.phone %></p>
+								<% end %>
 					</li>
 				<% end %>
 			</ul>	

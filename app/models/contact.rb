@@ -1,17 +1,18 @@
 class Contact < ActiveRecord::Base
-  attr_accessible :address_1, :address_2, :city, :first_name, :handle_email, :handle_linked_in, :handle_phone, :last_name, :zip_code, :show_as_actionable
+  attr_accessible :address_1, :address_2, :city, :first_name, :handle_email, :handle_linked_in, :handle_phone, :last_name, :zip_code, :show_as_actionable, :fullname
   has_many :touchpoints, dependent: :destroy
   has_many :call_verizons, dependent: :destroy
   has_many :email_gmails, dependent: :destroy
   has_many :linked_in_invitations, dependent: :destroy
   has_many :linked_in_messages, dependent: :destroy
   has_many :text_verizons, dependent: :destroy
+  has_many :phones, dependent: :destroy
+  has_many :emails, dependent: :destroy
   belongs_to :user
   
   acts_as_taggable
-  
-  after_create :assign_data_points
-  after_update :assign_data_points
+  #after_create :assign_data_points
+  #after_update :assign_data_points
   
   def assign_data_points
     CallVerizon.where(:contact_number => self.handle_phone).each do |e|

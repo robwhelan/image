@@ -1,7 +1,8 @@
 ImageLook::Application.routes.draw do
 
+  resources :phones
+  resources :emails
   resources :comments
-
 
   root :to => "pages#status"
   get "pages/synthesize_contacts"
@@ -20,13 +21,16 @@ ImageLook::Application.routes.draw do
   get "pages/add_tags"
   get "pages/vault_password"
   get "pages/add_comment"
+  get "pages/upload_vcard"
+  post "pages/upload"
   
   resources :touchpoints
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   resources :contacts do
     member do
       get :toggle_contact_as_actionable
+      post :create_contact_from_vcard
     end
   end
   resources :text_verizons

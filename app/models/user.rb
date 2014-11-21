@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, :omniauth_providers => [:google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :handle_phone, :handle_linked_in
@@ -135,7 +136,7 @@ class User < ActiveRecord::Base
 
   def get_calls(phone_primary, secret_question, password, phone_data, count_record)
       require 'mechanize'
-      agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
+      agent = Mechanize.new#{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
       agent.get "http://www.verizonwireless.com/"
 #      puts 'got to home page:'
 #      puts agent.page.title
@@ -288,7 +289,7 @@ class User < ActiveRecord::Base
 
   def get_texts(phone_primary, secret_question, password, phone_data, count_record)
       require 'mechanize'
-      agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
+      agent = Mechanize.new#{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
       agent.get "http://www.verizonwireless.com/"
       puts 'got to home page'
       form = agent.page.form_with :id => 'vgnSignInForm'
@@ -379,7 +380,8 @@ class User < ActiveRecord::Base
 
   def get_invitations(initiator, username, password, count_record)
       require 'mechanize'
-      agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
+      agent = Mechanize.new
+      #{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
       agent.get "https://www.linkedin.com"
       puts "got to landing page"
       form = agent.page.form_with :name => 'login'
@@ -461,7 +463,8 @@ class User < ActiveRecord::Base
 
   def get_messages(initiator, username, password, count_record)
       require 'mechanize'
-      agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
+      agent = Mechanize.new
+      #{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE}
       agent.get "https://www.linkedin.com"
 
       form = agent.page.form_with :name => 'login'

@@ -4,7 +4,7 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = current_user.contacts.order(:handle_linked_in)
+    @contacts = current_user.contacts.order(:last_name)
     
     if params[:contact]
       @contact_highlight = Contact.find(params[:contact])
@@ -90,6 +90,10 @@ class ContactsController < ApplicationController
   def toggle_contact_as_actionable
     @contact = Contact.find(params[:id])
     @contact.update_attributes(:show_as_actionable => params[:make_actionable])
+  end
+
+  def create_contact_from_vcard
+    @file = File.open(params[:vcards])
   end
   
 end

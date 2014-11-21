@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'rmagick', '2.13.2'
-gem "rest-client", "~> 1.6.7"
+gem "rest-client", "~> 1.7.2"
 gem 'amazon-ecs'
 gem 'thin'
 gem 'nokogiri'
@@ -15,6 +15,12 @@ gem 'devise'
 gem 'acts-as-taggable-on'
 gem 'delayed_job_active_record'
 gem 'aescrypt', '~> 1.0.0'
+gem 'vcard'
+gem 'phone'
+gem 'google-api-client', :require => 'google/api_client'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'json'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

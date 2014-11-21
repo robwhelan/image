@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140917100250) do
+ActiveRecord::Schema.define(:version => 20141113220507) do
 
   create_table "call_verizons", :force => true do |t|
     t.datetime "call_date"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20140917100250) do
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
     t.boolean  "show_as_actionable", :default => true
+    t.string   "fullname"
   end
 
   add_index "contacts", ["user_id"], :name => "index_contacts_on_user_id"
@@ -89,6 +90,15 @@ ActiveRecord::Schema.define(:version => 20140917100250) do
 
   add_index "email_gmails", ["contact_id"], :name => "index_email_gmails_on_contact_id"
   add_index "email_gmails", ["user_id"], :name => "index_email_gmails_on_user_id"
+
+  create_table "emails", :force => true do |t|
+    t.string   "email"
+    t.integer  "contact_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "emails", ["contact_id"], :name => "index_emails_on_contact_id"
 
   create_table "linked_in_invitations", :force => true do |t|
     t.string   "name"
@@ -139,6 +149,15 @@ ActiveRecord::Schema.define(:version => 20140917100250) do
   end
 
   add_index "new_comms", ["user_id"], :name => "index_new_comms_on_user_id"
+
+  create_table "phones", :force => true do |t|
+    t.string   "phone"
+    t.integer  "contact_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "phones", ["contact_id"], :name => "index_phones_on_contact_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

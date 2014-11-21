@@ -3,6 +3,10 @@
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
+			<%= form_tag({action: :upload}, multipart: true) do %>
+			  <%= file_field_tag 'vcards' %>
+			  <%= submit_tag 'Upload' %>
+			<% end %>
 			<%= form_tag( pages_save_vault_path, method: "get", :class => "form" ) do %>
 
 			    <div class="form-group">

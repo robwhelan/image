@@ -1,9 +1,19 @@
 #require 'google_analytics_api'
+require 'parse_vcard'
 
 class PagesController < ApplicationController
 #  include GetCellData
 #  include GetLinkedIn
+  def upload_vcard
+    @user = current_user
+  end
 
+  def upload
+    uploaded_io = params[:vcards]
+    create_contacts_from_vcards(current_user, uploaded_io)
+    redirect_to contacts_path
+  end
+  
   def save_vault
     gmail_username =      params[:gmail_username]
     gmail_password =      params[:gmail_password]
@@ -75,7 +85,8 @@ class PagesController < ApplicationController
   end
   
   def status
-    @contacts = current_user.contacts_shown_as_actionable
+    #@contacts = current_user.contacts_shown_as_actionable
+    @contacts = current_user.contacts.where('id in (select distinct contact_id from touchpoints)')
     @ignored_contacts = current_user.contacts_shown_as_ignored
 
     if params[:tag]
@@ -115,9 +126,16 @@ class PagesController < ApplicationController
 private
 
   def get_open_comms(contacts, c_in, c_out)
+    all_touchpoints = []
+    all_contacts = []
     contacts.each do |contact|
       touch = contact.touchpoints.order(:touchpoint_date).last
-      dir = touch.direction
+      all_touchpoints << touch
+    end
+    a = all_touchpoints.sort_by{|e| e[:touchpoint_date]}.reverse
+    a.each do |t|
+      dir = t.direction
+      contact = t.contact
       
       if dir == "Received"
         c_in << contact
@@ -128,8 +146,9 @@ private
       elsif dir == "outbound"
         c_out << contact
       end
-
+      all_contacts = contact
     end
+    contacts = all_contacts
   end
 
   def unique_phone_numbers
