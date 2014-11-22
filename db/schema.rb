@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141113220507) do
+ActiveRecord::Schema.define(:version => 20141121222940) do
 
   create_table "call_verizons", :force => true do |t|
     t.datetime "call_date"
@@ -234,6 +234,9 @@ ActiveRecord::Schema.define(:version => 20141113220507) do
     t.string   "encrypted_verizon_password"
     t.string   "encrypted_verizon_data"
     t.string   "vault_password"
+    t.string   "token"
+    t.string   "uid"
+    t.string   "provider"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
