@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :handle_phone, :handle_linked_in
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :handle_phone, :handle_linked_in,
+  :fullname, :first_name, :last_name, :provider, :uid, :profile_image
   # attr_accessible :title, :body
   
   has_many :touchpoints, dependent: :destroy
@@ -22,19 +23,25 @@ class User < ActiveRecord::Base
   acts_as_tagger
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token.info
-    if (User.admins.include?(data.email))
-      user = User.find_by(email: data.email)
+      user = User.find_by_email(access_token.info.email)
       if user
         user.provider = access_token.provider
         user.uid = access_token.uid
         user.token = access_token.credentials.token
         user.save
-        user
       else
-        redirect_to new_user_registration_path, notice: "Error."
+        user = User.create(
+          :fullname => access_token.info.name,
+          :first_name => access_token.info.first_name,
+          :last_name => access_token.info.last_name,
+          :provider => access_token.provider,
+          :uid => access_token.uid,
+          :email => access_token.info.email,
+          :password => Devise.friendly_token[0,20],
+          :profile_image => access_token.info.image
+          )
       end
-    end
+      return user
   end
 
   def recent_touchpoints(limit)
