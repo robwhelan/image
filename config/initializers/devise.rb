@@ -1,8 +1,9 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  require 'omniauth-google-oauth2'
-  config.omniauth :google_oauth2, '899409422618-n98apc8m1r1onsu0n3cltud10s424fcu.apps.googleusercontent.com', 'Ti6OdZ2BqTPP7-cEJbYmq3t3', { access_type: "offline", approval_prompt: "", scope: 'userinfo.email,calendar' }
+#  require 'omniauth-google-oauth2'
+
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT'], ENV['GOOGLE_SECRET'], { access_type: "offline", approval_prompt: "", scope: 'userinfo.email,calendar,contacts' }
     
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
