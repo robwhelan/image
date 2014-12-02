@@ -123,6 +123,12 @@ class PagesController < ApplicationController
     @comment = Comment.create(:user_id => current_user.id, :contact_id => @contact.id, :body => body)
   end
 
+  def get_google_contacts
+    current_user.get_google_contacts
+    redirect_to contacts_path
+  end
+  
+
 private
 
   def get_open_comms(contacts, c_in, c_out)

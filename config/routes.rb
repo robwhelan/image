@@ -23,6 +23,7 @@ ImageLook::Application.routes.draw do
   get "pages/add_comment"
   get "pages/upload_vcard"
   post "pages/upload"
+  get "pages/get_google_contacts"
   
   resources :touchpoints
   devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141122220937) do
+ActiveRecord::Schema.define(:version => 20141202023253) do
 
   create_table "call_verizons", :force => true do |t|
     t.datetime "call_date"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20141122220937) do
     t.datetime "updated_at",                           :null => false
     t.boolean  "show_as_actionable", :default => true
     t.string   "fullname"
+    t.string   "profile_image"
   end
 
   add_index "contacts", ["user_id"], :name => "index_contacts_on_user_id"

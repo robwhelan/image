@@ -6,12 +6,12 @@
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
 					
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+							<% if user_signed_in? %>
 						<%= image_tag current_user.profile_image, :class => "online", :alt => "me" %>
 						<span>
-							<% if user_signed_in? %>
 							<%= current_user.fullname %>
-							<% end %>
 						</span>
+							<% end %>
 						<i class="fa fa-angle-down"></i>
 					</a> 
 					
@@ -39,7 +39,7 @@
 						<a href="/contacts" title="My Contacts"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">My Contacts</span></a>
 					</li>
 					<li>
-						<a href="/pages/synthesize_contacts" title="Create Contacts"><i class="fa fa-lg fa-fw fa-magic"></i> <span class="menu-item-parent">Create Contacts</span></a>
+						<a href="/pages/get_google_contacts" title="Create Contacts"><i class="fa fa-lg fa-fw fa-magic"></i> <span class="menu-item-parent">Get Google Contacts</span></a>
 					</li>
 					<li>
 						<a href="/pages/setup_connections" title="Set Up External Sources"><i class="fa fa-lg fa-fw fa-bolt"></i> <span class="menu-item-parent">Set Up External Sources</span></a>

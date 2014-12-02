@@ -1,0 +1,26 @@
+<table class="table">
+	<tr>
+		<th>Image</th>
+		<th>Name</th>
+		<th>Email</th>
+		<th>Phone</th>
+	</tr>
+	<% @contacts.each do |contact| %>
+	<tr>
+		<td><% base_uri = contact.xpath('./link').first.attribute('href').value %>
+			<% params = "?access_token=" + current_user.token %>
+			<%= image_tag(base_uri + params) %>
+		</td>
+		<td><%= contact.xpath('./title')[0].inner_text %></td>
+		<td><% contact.xpath('./email').each do |e| %>
+            	<%= e.attributes['address'].value %>
+          	<% end %>
+		</td>
+		<td><% contact.xpath('./phonenumber').each do |p| %>
+            	<%= p.children.first.text %>
+          	<% end %>
+		</td>
+		<td></td>
+	</tr>
+	<% end %>
+</table>

@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  require 'net/http'
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -21,6 +22,61 @@ class User < ActiveRecord::Base
   has_many :new_comms, dependent: :destroy
 
   acts_as_tagger
+
+  def get_google_contacts
+    base = "https://google.com/m8/feeds/contacts/default/full"
+    results = "3000"
+    max_results = "max-results=" + results
+    access_token = "access_token=" + self.token
+    params = "?" + access_token + "&" + max_results
+    uri = URI(base + params)
+    contacts_feed = Net::HTTP.get(uri)
+    doc = Nokogiri::HTML(contacts_feed)
+    
+    doc.css('entry').each do |item|
+  		contact = self.contacts.new
+
+      #get image
+      image_link = item.xpath('./link').first.attribute('href').value
+  		contact.profile_image = image_link
+
+      #get full name
+      full_name = item.xpath('./title')[0].children.inner_text
+      contact.fullname = full_name
+      
+      #get first and last name
+      formatted_name_array = full_name.split
+      if formatted_name_array.size == 2
+        first_name = formatted_name_array[0]
+        last_name = formatted_name_array[1]
+      elsif formatted_name_array.size == 3
+        first_name = formatted_name_array[0]
+        last_name = formatted_name_array[2]
+      elsif formatted_name_array.size == 1
+        first_name = formatted_name_array[0]
+      else
+        first_name = formatted_name_array[0]
+        last_name = formatted_name_array[-1]
+      end
+      contact.first_name = first_name
+      contact.last_name = last_name
+      contact.save
+      
+      #get emails
+      item.xpath('./email').each do |e|
+        email = contact.emails.new
+        email.email = e.attributes['address'].value
+        email.save
+      end
+
+      #get phones
+  		item.xpath('./phonenumber').each do |p|
+        phone = contact.phones.new
+        phone.phone = p.children.first.text
+        phone.save
+      end
+  end
+end
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
       user = User.find_by_email(access_token.info.email)

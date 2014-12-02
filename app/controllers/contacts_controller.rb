@@ -74,7 +74,6 @@ class ContactsController < ApplicationController
       end
     end
   end
-
   # DELETE /contacts/1
   # DELETE /contacts/1.json
   def destroy
