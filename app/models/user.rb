@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :handle_phone, :handle_linked_in,
-  :fullname, :first_name, :last_name, :provider, :uid, :profile_image
+  :fullname, :first_name, :last_name, :provider, :uid, :profile_image, :token
   # attr_accessible :title, :body
   
   has_many :touchpoints, dependent: :destroy
@@ -22,6 +22,66 @@ class User < ActiveRecord::Base
   has_many :new_comms, dependent: :destroy
 
   acts_as_tagger
+
+  def get_google_gmail
+    require 'google/api_client'
+    client = Google::APIClient.new
+    client.authorization.access_token = User.first.token
+    gmail = client.discovered_api('gmail')
+    result = client.execute(:api_method => gmail.users.messages.list,
+                            :parameters => { 'userId' => 'me'},
+                            :authorization => client.authorization)
+    
+    message_list = JSON.parse(result.data.to_json)
+    message_list["messages"].each do |msg|
+      _id = msg["id"]
+      unique_message = client.execute(:api_method => gmail.users.messages.get, :parameters => { 'userId' => 'me', 'id' => _id }, :authorization => client.authorization )
+      
+      h = JSON.parse(unique_message.data.to_json)["payload"]["headers"]
+      header_from = h.select { |header| header["name"] == "From"}.first["value"]
+      
+      begin
+        header_date = h.select { |header| header["name"] == "Date"}.first["value"]
+        date_sent = header_date.to_datetime
+        begin
+          header_to = h.select { |header| header["name"] == "To"}.first["value"]
+          email_to = header_to[/\<(.*?)>/,1]
+          name_to = header_to[/^(.*?)\ </,-1]
+        rescue NoMethodError
+          email_to = nil
+        end
+
+        email_from = header_from[/\<(.*?)>/,1]
+        name_from = header_from[/^(.*?)\ </,-1]
+      
+        if email_from == User.first.email
+          email_direction = "outbound"
+          contact_name = name_to
+          contact_email = email_to
+        else
+          email_direction = "inbound"
+          contact_name = name_from
+          contact_email = email_from
+        end
+
+        email_gmail = User.first.email_gmails.create(
+            :user_id => User.first.id,
+            :contact_name => contact_name,
+            :contact_email => contact_email,
+            :date_sent => date_sent,
+            :direction => email_direction
+            )
+      rescue NoMethodError
+        puts "Message did not come with a date"
+      end
+      
+    end
+  end
+  
+  def get_google_calendar
+    require 'google/api_client'
+    calendar = client.discovered_api('calendar', 'v3')
+  end
 
   def get_google_contacts
     base = "https://google.com/m8/feeds/contacts/default/full"
@@ -92,6 +152,7 @@ end
           :last_name => access_token.info.last_name,
           :provider => access_token.provider,
           :uid => access_token.uid,
+          :token => access_token.credentials.token,
           :email => access_token.info.email,
           :password => Devise.friendly_token[0,20],
           :profile_image => access_token.info.image

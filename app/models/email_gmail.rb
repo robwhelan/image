@@ -3,6 +3,7 @@ class EmailGmail < ActiveRecord::Base
   belongs_to :contact
   belongs_to :user
   
+  
   after_create :assign_contact
   after_update :create_touchpoint
   #private

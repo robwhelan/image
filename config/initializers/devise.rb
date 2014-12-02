@@ -3,7 +3,7 @@
 Devise.setup do |config|
 #  require 'omniauth-google-oauth2'
 
-  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT'], ENV['GOOGLE_SECRET'], { access_type: "offline", approval_prompt: "", scope: 'userinfo.email,calendar,contacts' }
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT'], ENV['GOOGLE_SECRET'], { access_type: "offline", approval_prompt: "", scope: 'userinfo.email,calendar,contacts,gmail.readonly' }
     
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
