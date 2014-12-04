@@ -317,9 +317,9 @@
 		<!-- END HEADER -->
 
 		<!-- Left panel : Navigation area -->
-
-	<%= render '/layouts/nav' %>
-
+		<% if user_signed_in? %>
+			<%= render '/layouts/nav' %>
+		<% end %>
 		<!-- MAIN PANEL -->
 		<div id="main" role="main">
 

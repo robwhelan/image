@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :handle_phone, :handle_linked_in,
-  :fullname, :first_name, :last_name, :provider, :uid, :profile_image, :token
+  :fullname, :first_name, :last_name, :provider, :uid, :profile_image, :token, :google_refresh_token, :google_expires_at
   # attr_accessible :title, :body
   
   has_many :touchpoints, dependent: :destroy
@@ -23,18 +23,48 @@ class User < ActiveRecord::Base
 
   acts_as_tagger
 
-  def get_google_gmail
+  def get_google_email
     require 'google/api_client'
     client = Google::APIClient.new
-    client.authorization.access_token = User.first.token
+    #add something here to handle if the token is expired
+    self.fresh_token
+    client.authorization.access_token = self.token
     gmail = client.discovered_api('gmail')
+    after_date = "after:" + 2.days.ago.to_date.to_s
+    message_ids = []
+    
     result = client.execute(:api_method => gmail.users.messages.list,
-                            :parameters => { 'userId' => 'me'},
+                            :parameters => {  'userId' => 'me',
+                                              'q' => after_date + ' (in:sent OR in:personal OR in:inbox) -(in:inbox AND (label:promotions OR label:updates OR label:social)) -(label:promotions OR label:updates OR label:social)',
+                                              'includeSpamTrash' => 'false'},
                             :authorization => client.authorization)
     
     message_list = JSON.parse(result.data.to_json)
+    #num_pages = message_list["resultSizeEstimate"]
+    next_page = message_list["nextPageToken"]
+
     message_list["messages"].each do |msg|
-      _id = msg["id"]
+      message_ids << msg["id"]
+    end
+
+    i = 0
+    while next_page != nil do
+      result = client.execute(:api_method => gmail.users.messages.list,
+                              :parameters => {  'userId' => 'me',
+                                                'q' => after_date,
+                                                'pageToken' => next_page},
+                              :authorization => client.authorization)
+    
+      message_list = JSON.parse(result.data.to_json)
+      message_list["messages"].each do |msg|
+        message_ids << msg["id"]
+      end
+
+      next_page = message_list["nextPageToken"]
+    end    
+    
+    message_ids.each do |msg|
+      _id = msg
       unique_message = client.execute(:api_method => gmail.users.messages.get, :parameters => { 'userId' => 'me', 'id' => _id }, :authorization => client.authorization )
       
       h = JSON.parse(unique_message.data.to_json)["payload"]["headers"]
@@ -54,7 +84,7 @@ class User < ActiveRecord::Base
         email_from = header_from[/\<(.*?)>/,1]
         name_from = header_from[/^(.*?)\ </,-1]
       
-        if email_from == User.first.email
+        if email_from == self.email
           email_direction = "outbound"
           contact_name = name_to
           contact_email = email_to
@@ -64,8 +94,8 @@ class User < ActiveRecord::Base
           contact_email = email_from
         end
 
-        email_gmail = User.first.email_gmails.create(
-            :user_id => User.first.id,
+        email_gmail = self.email_gmails.create(
+            :user_id => self.id,
             :contact_name => contact_name,
             :contact_email => contact_email,
             :date_sent => date_sent,
@@ -73,9 +103,9 @@ class User < ActiveRecord::Base
             )
       rescue NoMethodError
         puts "Message did not come with a date"
-      end
+      end #begin...
       
-    end
+    end #message_ids.each do |msg|
   end
   
   def get_google_calendar
@@ -135,8 +165,8 @@ class User < ActiveRecord::Base
         phone.phone = p.children.first.text
         phone.save
       end
-  end
-end
+    end #each entry
+  end #get contacts
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
       user = User.find_by_email(access_token.info.email)
@@ -153,12 +183,45 @@ end
           :provider => access_token.provider,
           :uid => access_token.uid,
           :token => access_token.credentials.token,
+          :google_refresh_token => access_token.credentials.refresh_token,
+          :google_expires_at => Time.at(access_token.credentials.expires_at).to_datetime,
           :email => access_token.info.email,
           :password => Devise.friendly_token[0,20],
           :profile_image => access_token.info.image
           )
       end
       return user
+  end
+
+  def token_to_params
+    {'refresh_token' => self.google_refresh_token,
+    'client_id' => ENV['GOOGLE_CLIENT'],
+    'client_secret' => ENV['GOOGLE_SECRET'],
+    'grant_type' => 'refresh_token'}
+  end
+ 
+  def request_token_from_google
+    url = URI("https://accounts.google.com/o/oauth2/token")
+    Net::HTTP.post_form(url, self.token_to_params)
+  end
+ 
+  def token_refresh!
+    response = request_token_from_google
+    data = JSON.parse(response.body)
+    update_attributes(
+      token: data['access_token'],
+      google_expires_at: Time.now + (data['expires_in'].to_i).seconds)
+  end
+ 
+  def token_expired?
+    google_expires_at < Time.now
+  end
+ 
+  def fresh_token
+    if token_expired?
+      token_refresh!
+    end
+    token
   end
 
   def recent_touchpoints(limit)
@@ -681,6 +744,5 @@ end
       @new_comms.save
       
   end #get_messages
-
 
 end

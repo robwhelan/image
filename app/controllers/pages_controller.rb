@@ -128,6 +128,11 @@ class PagesController < ApplicationController
     redirect_to contacts_path
   end
   
+  def get_google_email
+    current_user.get_google_email
+    redirect_to root_path
+  end
+  
 
 private
 

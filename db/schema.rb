@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141202023253) do
+ActiveRecord::Schema.define(:version => 20141204144317) do
 
   create_table "call_verizons", :force => true do |t|
     t.datetime "call_date"
@@ -242,6 +242,8 @@ ActiveRecord::Schema.define(:version => 20141202023253) do
     t.string   "fullname"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "google_refresh_token"
+    t.datetime "google_expires_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
