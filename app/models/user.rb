@@ -23,31 +23,43 @@ class User < ActiveRecord::Base
 
   acts_as_tagger
 
+  def latest_email_id
+    if self.email_gmails.empty?
+      x = nil
+    else
+      ary = self.email_gmails.sort_by &:date_sent
+      x = ary.last.message_id
+    end
+    return x
+  end
+
   def get_google_email
     require 'google/api_client'
     client = Google::APIClient.new
-    #add something here to handle if the token is expired
     self.fresh_token
     client.authorization.access_token = self.token
     gmail = client.discovered_api('gmail')
-    after_date = "after:" + 2.days.ago.to_date.to_s
+
+    after_date = "after:" + 3.months.ago.to_date.to_s
     message_ids = []
-    
     result = client.execute(:api_method => gmail.users.messages.list,
                             :parameters => {  'userId' => 'me',
                                               'q' => after_date + ' (in:sent OR in:personal OR in:inbox) -(in:inbox AND (label:promotions OR label:updates OR label:social)) -(label:promotions OR label:updates OR label:social)',
                                               'includeSpamTrash' => 'false'},
                             :authorization => client.authorization)
     
-    message_list = JSON.parse(result.data.to_json)
-    #num_pages = message_list["resultSizeEstimate"]
-    next_page = message_list["nextPageToken"]
+    message_list      = JSON.parse(result.data.to_json)
+    next_page         = message_list["nextPageToken"]
+    latest_message_id = self.latest_email_id
 
     message_list["messages"].each do |msg|
-      message_ids << msg["id"]
+      if msg["id"] == latest_message_id
+        break
+      else
+        message_ids << msg["id"]
+      end
     end
 
-    i = 0
     while next_page != nil do
       result = client.execute(:api_method => gmail.users.messages.list,
                               :parameters => {  'userId' => 'me',
@@ -99,7 +111,8 @@ class User < ActiveRecord::Base
             :contact_name => contact_name,
             :contact_email => contact_email,
             :date_sent => date_sent,
-            :direction => email_direction
+            :direction => email_direction,
+            :message_id => _id
             )
       rescue NoMethodError
         puts "Message did not come with a date"

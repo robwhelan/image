@@ -34,10 +34,5 @@ class EmailGmail < ActiveRecord::Base
       contact: self.contact
       )
   end
-
-  def self.newest(direction, user)
-    ary = user.email_gmails.where(:direction => direction).sort_by &:date_sent
-    return ary.last.date_sent
-  end
   
 end
