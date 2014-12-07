@@ -89,6 +89,7 @@ class ContactsController < ApplicationController
   def toggle_contact_as_actionable
     @contact = Contact.find(params[:id])
     @contact.update_attributes(:show_as_actionable => params[:make_actionable])
+    render nothing: true
   end
 
   def create_contact_from_vcard

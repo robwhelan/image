@@ -124,12 +124,12 @@ class PagesController < ApplicationController
   end
 
   def get_google_contacts
-    current_user.get_google_contacts
+    current_user.delay.get_google_contacts
     redirect_to contacts_path
   end
   
   def get_google_email
-    current_user.get_google_email
+    current_user.delay.get_google_email
     redirect_to root_path
   end
   

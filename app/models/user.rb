@@ -36,12 +36,12 @@ class User < ActiveRecord::Base
   def get_google_email
     require 'google/api_client'
     client = Google::APIClient.new
-    self.fresh_token
-    client.authorization.access_token = self.token
     gmail = client.discovered_api('gmail')
 
     after_date = "after:" + 3.months.ago.to_date.to_s
     message_ids = []
+    self.fresh_token
+    client.authorization.access_token = self.token
     result = client.execute(:api_method => gmail.users.messages.list,
                             :parameters => {  'userId' => 'me',
                                               'q' => after_date + ' (in:sent OR in:personal OR in:inbox) -(in:inbox AND (label:promotions OR label:updates OR label:social)) -(label:promotions OR label:updates OR label:social)',
@@ -123,7 +123,13 @@ class User < ActiveRecord::Base
   
   def get_google_calendar
     require 'google/api_client'
+    client = Google::APIClient.new
     calendar = client.discovered_api('calendar', 'v3')
+    
+    User.first.fresh_token
+    client.authorization.access_token = User.first.token
+    result = client.execute(:api_method => calendar.calendar_list.list,
+                            :authorization => client.authorization)
   end
 
   def get_google_contacts
